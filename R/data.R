@@ -1,3 +1,9 @@
+#' outviz: A package for standardized model outputs
+#'
+#' @docType package
+#' @name outviz
+NULL
+
 #' Maximum desirable deviation curve
 #'
 #' A dataset containing the maximum desirable error for links by volume.
