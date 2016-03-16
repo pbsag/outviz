@@ -1,0 +1,10 @@
+Package: outviz
+Type: Package
+Title: Build Output Tables and Visualizations for Travel Models
+Version: 0.1
+Date: 2016-03-16
+Authors@R: person("Greg", "Macfarlane",
+email = "macfarlaneg@pbworld.com", role = c("aut", "cre"))
+Description: More about what it does (maybe more than one line)
+License: Proprietary
+LazyData: TRUE
