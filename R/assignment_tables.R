@@ -89,6 +89,17 @@ table_flow <- function(links, volume, count, group_field = NULL) {
     stop("Must supply grouping variable")
   }
 
+  # If group and volume are the same, cut into a pretty vector
+  if(group_field == volume){
+    group_field <- "Volume"
+    links <- links %>%
+      mutate_(
+        .dots = setNames(
+          list(lazyeval::interp(~ cut_volumes(x), x = as.name(volume))),
+          group_field)
+      )
+  }
+
   # table by grouping
   dots <- list(
     lazyeval::interp(~sum(x), x = as.name(volume)),
