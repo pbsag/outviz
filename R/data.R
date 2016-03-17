@@ -15,3 +15,20 @@ NULL
 #' }
 #'
 "mdd"
+
+#' Link output table
+#'
+#' A dataset containing example link volume and count information to demonstrate
+#' package functionality.
+#'
+#' @format A data frame with 505 observations and 8 variables.
+#' \describe{
+#'   \item{a, b}{Node identifiers}
+#'   \item{facility_type}{The facility type of the links}
+#'   \item{area_type}{The area type of the links}
+#'   \item{volume}{Modeled link volume}
+#'   \item{screenline}{The screenline that the links belong to}
+#'   \item{count}{The calibration year count value}
+#' }
+#'
+"links"
