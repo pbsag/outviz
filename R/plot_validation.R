@@ -13,6 +13,7 @@
 #' @return A ggplot2 plot object
 #'
 #' @import ggplot2
+#' @import dplyr
 #'
 #' @examples
 #' plot_validation(links, "volume", "count")

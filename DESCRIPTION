@@ -7,3 +7,6 @@ Authors@R: person("Greg", "Macfarlane", email = "macfarlaneg@pbworld.com", role 
 Description: More about what it does (maybe more than one line)
 License: Proprietary
 LazyData: TRUE
+RoxygenNote: 5.0.1
+Imports: dplyr,
+    ggplot2
