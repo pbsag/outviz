@@ -32,3 +32,23 @@ rmse <- function(x, y){
 pct_rmse <- function(x, y){
   rmse(x, y) / mean(y) * 100
 }
+
+
+#' Cut volumes into pretty levels
+#'
+#' @param x Volume levels
+#' @return A labeled factor variable of \code{length(x)} with the levels of
+#'   \code{x} cut into bins.
+#'
+cut_volumes <- function(x) {
+  breaks <- c(0, 5, 10, 20, 40, 60, Inf) * 1000
+  n <- length(breaks)
+  labels <- c(
+    paste(breaks[2:n-2], "-", breaks[3:n-1]),
+    paste(">", breaks[n-1])
+  )
+
+  cut(x, breaks = breaks, labels = labels, include.lowest = TRUE)
+
+}
+
