@@ -1,8 +1,8 @@
 Package: outviz
 Type: Package
 Title: Build Output Tables and Visualizations for Travel Models
-Version: 0.0.9000
-Date: 2016-03-16
+Version: 0.0.1
+Date: 2016-03-17
 Authors@R: person("Greg", "Macfarlane", email = "macfarlaneg@pbworld.com", role = c("aut", "cre"))
 Description: We commonly look at the same tables and reports from travel demand
     models. This package standardizes these reports and provides an easy tool
