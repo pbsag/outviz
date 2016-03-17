@@ -27,7 +27,7 @@ Link validation plot
 }
 \examples{
 plot_validation(links, "volume", "count")
-plot_validation(links, "volume", "count", color_field = "facility_type")
+plot_validation(links, "volume", "count", color_field = "facility_group")
 
 }
 

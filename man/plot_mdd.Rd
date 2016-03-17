@@ -27,7 +27,7 @@ Maximum desirable deviation plot
 }
 \examples{
 plot_mdd(links, "volume", "count")
-plot_mdd(links, "volume", "count", color_field = "facility_type")
+plot_mdd(links, "volume", "count", color_field = "facility_group")
 
 }
 
