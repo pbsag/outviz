@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' plot_validation(links, "volume", "count")
-#' plot_validation(links, "volume", "count", color_field = "facility_type")
+#' plot_validation(links, "volume", "count", color_field = "facility_group")
 #'
 #' @export
 plot_validation <- function(links, volume, count, color_field = NULL) {
@@ -39,6 +39,10 @@ plot_validation <- function(links, volume, count, color_field = NULL) {
   p +
     geom_point(alpha = 0.3) +
     geom_abline(slope = 1, intercept = 0) +
-    stat_smooth()
+    stat_smooth() +
+
+    # Add labels
+    ylab("Modeled link volume") +
+    xlab("Observed link volume")
 
 }
