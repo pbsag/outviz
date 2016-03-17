@@ -2,6 +2,7 @@
 
 export(plot_mdd)
 export(plot_validation)
+export(table_flow)
 export(table_rmse)
 import(dplyr)
 import(ggplot2)
