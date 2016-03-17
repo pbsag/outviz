@@ -25,6 +25,7 @@ NULL
 #' \describe{
 #'   \item{a, b}{Node identifiers}
 #'   \item{facility_type}{The facility type of the links}
+#'   \item{facility_group}{High-level facility types}
 #'   \item{area_type}{The area type of the links}
 #'   \item{volume}{Modeled link volume}
 #'   \item{screenline}{The screenline that the links belong to}

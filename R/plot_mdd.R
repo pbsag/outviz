@@ -6,6 +6,7 @@
 #'
 #' @import ggplot2
 #' @import dplyr
+#' @import lazyeval
 #'
 #' @examples
 #' plot_mdd(links, "volume", "count")

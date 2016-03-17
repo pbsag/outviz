@@ -14,6 +14,7 @@
 #'
 #' @import ggplot2
 #' @import dplyr
+#' @import lazyeval
 #'
 #' @examples
 #' plot_validation(links, "volume", "count")
