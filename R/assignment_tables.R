@@ -28,38 +28,37 @@ table_rmse <- function(links, volume, count, group_field = NULL) {
   if(group_field == volume){
     links <- links %>%
       mutate_(
-        "Group" = lazyeval::interp(~ cut_volumes(x), x = as.name(volume))
-      )
-  } else {
-    links <- links %>%
-      mutate_(
-        "Group" = group_field
+        .dots = setNames(
+          list(lazyeval::interp(~ cut_volumes(x), x = as.name(volume))),
+          group_field)
       )
   }
 
   # table by grouping
+  dots <- list(
+    lazyeval::interp(~n()),
+    lazyeval::interp(~pct_rmse(x, y), x = as.name(volume), y = as.name(count))
+  )
+
   lt <- links %>%
-    group_by(Group) %>%
-    summarise(
-      `Number of Links` = n(),
-      `Percent RMSE` = pct_rmse(volume, count)
-    )
+    group_by_(group_field) %>%
+    summarise_(.dots = setNames(dots, c("Number of Links", "Percent RMSE")))
 
   #totals row
+  dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+
   tot <- links %>%
     ungroup() %>%
-    mutate(Group = "Total") %>%
-    summarise(
-      Group = Group[1],
-      `Number of Links` = n(),
-      `Percent RMSE` = pct_rmse(volume, count)
-    )
+    summarise_(.dots = setNames(
+      dots, c("Number of Links", "Percent RMSE", as.character(group_field))
+    ))
 
   suppressWarnings(
     # this will complain because we are joining a factor to a
     # character. don't need to worry
     bind_rows(lt, tot)
   )
+
 
 }
 
