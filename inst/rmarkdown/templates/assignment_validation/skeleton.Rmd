@@ -24,8 +24,11 @@ links <- links %>%
 
 
 ```{r validation}
-plot_validation(links, volume_var, count_var)
-plot_validation(links, volume_var, count_var, color_field = "facility_group")
+plot_validation(links, volume_var, count_var, show_lm = TRUE)
+plot_validation(links, volume_var, count_var, show_lm = TRUE) +
+  facet_wrap(~ area_type, scales = "free")
+plot_validation(links, volume_var, count_var) +
+  facet_wrap(~ facility_group)
 ```
 
 ```{r mdd}
