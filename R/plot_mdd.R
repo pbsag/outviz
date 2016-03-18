@@ -39,7 +39,7 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
 
   # Add geometries for points and statistics, and return
   p +
-    geom_point(alpha = 0.3) +
+    geom_point(alpha = 0.7) +
     geom_line(data = mdd, aes_string(x = "volume", y = "mdd", color = NULL)) +
     coord_cartesian(ylim = c(0, 100), xlim = c(0, max(links[, volume]))) +
     stat_smooth() +

@@ -38,7 +38,7 @@ plot_validation <- function(links, volume, count, color_field = NULL) {
 
   # Add geometries for points and statistics, and return
   p +
-    geom_point(alpha = 0.3) +
+    geom_point(alpha = 0.7) +
     geom_abline(slope = 1, intercept = 0) +
     stat_smooth() +
 
