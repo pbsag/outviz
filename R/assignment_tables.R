@@ -35,6 +35,17 @@ table_rmse <- function(links, volume, count, group_field = NULL) {
       )
   }
 
+  # convert group field to character vector so that dplyr::bind_rows doesn't
+  # fritz out.
+  links <- links %>%
+    mutate_(
+      .dots = setNames(
+        list(lazyeval::interp(~as.character(factor(x)),
+                              x = as.name(group_field))),
+        group_field
+      )
+    )
+
   # table by grouping
   dots <- list(
     lazyeval::interp(~n()),
@@ -100,6 +111,18 @@ table_flow <- function(links, volume, count, group_field = NULL) {
           group_field)
       )
   }
+
+  # convert group field to character vector so that dplyr::bind_rows doesn't
+  # fritz out.
+  links <- links %>%
+    mutate_(
+      .dots = setNames(
+        list(lazyeval::interp(~as.character(factor(x)),
+                              x = as.name(group_field))),
+        group_field
+      )
+    )
+
 
   # table by grouping
   dots <- list(
