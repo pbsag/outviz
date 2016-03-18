@@ -26,6 +26,7 @@ table_rmse <- function(links, volume, count, group_field = NULL) {
 
   # If group and volume are the same, cut into a pretty vector
   if(group_field == volume){
+    group_field = "Volume"
     links <- links %>%
       mutate_(
         .dots = setNames(
