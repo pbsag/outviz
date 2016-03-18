@@ -42,7 +42,7 @@ table_rmse <- function(links, volume, count, group_field = NULL) {
   )
 
   lt <- links %>%
-    group_by_(group_field) %>%
+    group_by_(as.character(group_field)) %>%
     summarise_(.dots = setNames(dots, c("Number of Links", "Percent RMSE")))
 
   #totals row
@@ -108,7 +108,7 @@ table_flow <- function(links, volume, count, group_field = NULL) {
   )
 
   lt <- links %>%
-    group_by_(group_field) %>%
+    group_by_(as.character(group_field)) %>%
     summarise_(.dots = setNames(dots, c("Model Flow", "Observed Flow")))
 
   #totals row
