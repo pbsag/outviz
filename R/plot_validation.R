@@ -2,7 +2,9 @@
 #'
 #'
 #' @param links Model link table as a \code{tidy} data frame, with each row
-#'   representing a single direction of a single link.
+#'   representing an analysis link. The function assumes that the data is
+#'   already tidy: two-way links should already be converted to single values,
+#'   etc.
 #' @param volume Character string identifying the modeled volume in the link
 #'   table.
 #' @param count Character string identifying the calibration/validation counts
@@ -13,8 +15,8 @@
 #'   the fitted model's equation. Default \code{FALSE} will print spline
 #'   regression fit without any equation.
 #'
+#' @return A ggplot2 plot object.
 #'
-#' @return A ggplot2 plot object
 #'
 #' @import ggplot2
 #' @import dplyr

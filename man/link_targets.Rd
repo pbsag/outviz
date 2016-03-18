@@ -9,7 +9,9 @@ link_targets(links, volume, count, freeway_scope = NULL,
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
-representing a single direction of a single link.}
+representing an analysis link. The function assumes that the data is
+already tidy: two-way links should already be converted to single values,
+etc.}
 
 \item{volume}{Character string identifying the modeled volume in the link
 table.}
