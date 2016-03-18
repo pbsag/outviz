@@ -9,6 +9,7 @@ output: html_document
 library(outviz)
 library(dplyr)
 library(knitr)
+library(ggplot2)
 ```
 
 ```{r area_type}
