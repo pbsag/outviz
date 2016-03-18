@@ -9,8 +9,6 @@ output: html_document
 library(outviz)
 library(dplyr)
 library(knitr)
-
-
 ```
 
 ```{r area_type}
@@ -50,6 +48,9 @@ table_rmse(links, volume_var, count_var, group_field = "area_type") %>%
 ```
 
 ```{r flows}
+table_flow(links, volume_var, count_var, group_field = "facility_group") %>%
+  kable(digits = 2, caption = "Total Deviation by Facility Group")
+
 table_flow(links, volume_var, count_var, group_field = "facility_group") %>%
   kable(digits = 2, caption = "Total deviation")
 
