@@ -73,8 +73,10 @@ link_targets <- function(links, volume, count,
 #' @return A \code{data_frame} with a description and result of the test.
 #'
 #' @examples
+#' \dontrun{
 #' # This is a pretend test to illustrate
 #' link_test(links, quote(volume > count), "Volume over count", 50)
+#' }
 link_test <- function(d, crit, string, target){
 
   d %>%

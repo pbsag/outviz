@@ -30,7 +30,7 @@ This table sums the volume on all links in a group, and compares against the
 total count volume, as in a screenline comparison.
 }
 \examples{
-table_rmse(links, "volume", "count")
+table_flow(links, "volume", "count", group_field = "area_type")
 
 a <- table_flow(links, "volume", "count", group_field = "facility_group")
 knitr::kable(a)

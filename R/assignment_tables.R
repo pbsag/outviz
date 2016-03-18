@@ -11,7 +11,7 @@
 #' @import lazyeval
 #'
 #' @examples
-#' table_rmse(links, "volume", "count")
+#' table_rmse(links, "volume", "count", group_field = "area_type")
 #'
 #' a <- table_rmse(links, "volume", "count", group_field = "facility_group")
 #' knitr::kable(a)
@@ -76,7 +76,7 @@ table_rmse <- function(links, volume, count, group_field = NULL) {
 #' @import lazyeval
 #'
 #' @examples
-#' table_rmse(links, "volume", "count")
+#' table_flow(links, "volume", "count", group_field = "area_type")
 #'
 #' a <- table_flow(links, "volume", "count", group_field = "facility_group")
 #' knitr::kable(a)

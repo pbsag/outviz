@@ -22,7 +22,9 @@ A \code{data_frame} with a description and result of the test.
 Construct a test call
 }
 \examples{
+\dontrun{
 # This is a pretend test to illustrate
 link_test(links, quote(volume > count), "Volume over count", 50)
+}
 }
 

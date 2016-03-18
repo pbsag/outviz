@@ -4,7 +4,7 @@
 \alias{plot_validation}
 \title{Link validation plot}
 \usage{
-plot_validation(links, volume, count, color_field = NULL)
+plot_validation(links, volume, count, color_field = NULL, show_lm = FALSE)
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
@@ -32,7 +32,7 @@ A ggplot2 plot object.
 Link validation plot
 }
 \examples{
-plot_validation(links, "volume", "count")
+plot_validation(links, "volume", "count", show_lm = TRUE)
 plot_validation(links, "volume", "count", color_field = "facility_group")
 
 }

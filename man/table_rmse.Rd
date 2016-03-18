@@ -29,7 +29,7 @@ A \code{data_frame} with the link summary table.
 Percent RMSE table
 }
 \examples{
-table_rmse(links, "volume", "count")
+table_rmse(links, "volume", "count", group_field = "area_type")
 
 a <- table_rmse(links, "volume", "count", group_field = "facility_group")
 knitr::kable(a)
