@@ -33,7 +33,7 @@ plot_validation <- function(links, volume, count, color_field = NULL) {
     p <- ggplot(links, aes_string(x = count, y = volume, color = "color")) +
       scale_color_discrete(color_field)
   } else {
-    p <- ggplot(links, aes_string(x = volume, y = count))
+    p <- ggplot(links, aes_string(x = count, y = volume))
   }
 
   # Add geometries for points and statistics, and return
