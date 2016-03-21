@@ -1,11 +1,17 @@
-#' Add linear smoothing and regression equation to plot
+#' Add function equation to statistical smoothing
 #'
-#' @param ... see ?geom_text
-#'
+#' @inheritParams ggplot2::stat_smooth
+#' @param xpos X-position for text
+#' @param ypos Y-position for text
 #' @source https://gist.github.com/kdauria/524eade46135f6348140
 #' @author kdauria
-#'
-#'
+#' @section Computed variables:
+#' \describe{
+#'   \item{y}{predicted value}
+#'   \item{ymin}{lower pointwise confidence interval around the mean}
+#'   \item{ymax}{upper pointwise confidence interval around the mean}
+#'   \item{se}{standard error}
+#' }
 stat_smooth_func <- function(mapping = NULL, data = NULL,
                              geom = "smooth", position = "identity",
                              ...,
@@ -48,11 +54,6 @@ stat_smooth_func <- function(mapping = NULL, data = NULL,
 }
 
 
-#' Stat Smoothing and Labeling for ggplot2 objects
-#'
-#' @param ... Arguments received from stat_smooth_func
-#'
-#'
 StatSmoothFunc <- ggproto(
   "StatSmooth", Stat,
 
