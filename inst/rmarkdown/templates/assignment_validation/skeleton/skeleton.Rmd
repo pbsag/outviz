@@ -1,0 +1,67 @@
+---
+title: "Assignment Validation"
+author: "WSP | Parsons Brinckerhoff"
+output: html_document
+---
+
+
+```{r setup}
+library(outviz)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+```
+
+```{r area_type}
+volume_var <- "volume"
+count_var <- "count"
+links <- links %>%
+  mutate(area_type = factor(
+    area_type,  labels = c("Urban", "Exurban", "Suburban", "Rural"))
+  )
+```
+
+
+```{r validation}
+plot_validation(links, volume_var, count_var, show_lm = TRUE)
+plot_validation(links, volume_var, count_var, show_lm = TRUE) +
+  facet_wrap(~ area_type, scales = "free")
+plot_validation(links, volume_var, count_var) +
+  facet_wrap(~ facility_group)
+```
+
+```{r mdd}
+plot_mdd(links, volume_var, count_var)
+plot_mdd(links, volume_var, count_var, color_field = "facility_group")
+```
+
+```{r rmse}
+table_rmse(links, volume_var, count_var, group_field = "facility_group") %>%
+  mutate(`Target` = c(25, 50, 50, 65, 40)) %>%
+  kable(digits = 2, caption = "RMSE by Facility Group")
+
+table_rmse(links, volume_var, count_var, group_field = volume_var) %>%
+  mutate(`Target` = c(120, 45, 35, 30, 40)) %>%
+  kable(digits = 2, caption = "RMSE by Volume Class")
+
+table_rmse(links, volume_var, count_var, group_field = "area_type") %>%
+  kable(digits = 2, caption = "RMSE by Area Type")
+```
+
+```{r flows}
+table_flow(links, volume_var, count_var, group_field = "facility_group") %>%
+  kable(digits = 2, caption = "Total Deviation by Facility Group")
+
+table_flow(links, volume_var, count_var, group_field = "facility_group") %>%
+  kable(digits = 2, caption = "Total deviation")
+
+table_flow(links %>% filter(screenline > 0), 
+           volume_var, count_var, group_field = "screenline") %>%
+  kable(digits = 2, caption = "Screen Line Evaluation")
+```
+
+```{r targets}
+link_targets(links, volume_var, count_var,
+             "facility_group == 'Expressway'", "volume > 10000") %>%
+  kable(digits = 2, caption = "Individual Link Targets")
+```

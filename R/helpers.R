@@ -10,3 +10,45 @@
 pct_error <- function(x, y) {
   (x - y) / y * 100
 }
+
+#' Calculate RMSE
+#'
+#' @inheritParams pct_error
+#'
+#' @return The root mean squared error between \code{x} and \code{y}
+#'
+rmse <- function(x, y){
+  n <- length(x)
+  sq_error <- ( x - y )^2
+  sqrt( sum(sq_error) / (n - 1) )
+}
+
+#' Calculate percent RMSE
+#'
+#' @inheritParams pct_error
+#'
+#' @return The percent root mean squared error between \code{x} and \code{y}
+#'
+pct_rmse <- function(x, y){
+  rmse(x, y) / mean(y) * 100
+}
+
+
+#' Cut volumes into pretty levels
+#'
+#' @param x Volume levels
+#' @return A labeled factor variable of \code{length(x)} with the levels of
+#'   \code{x} cut into bins.
+#'
+cut_volumes <- function(x) {
+  breaks <- c(0, 5, 10, 20, 40, 60, Inf) * 1000
+  n <- length(breaks)
+  labels <- c(
+    paste(breaks[2:n-2], "-", breaks[3:n-1]),
+    paste(">", breaks[n-1])
+  )
+
+  cut(x, breaks = breaks, labels = labels, include.lowest = TRUE)
+
+}
+

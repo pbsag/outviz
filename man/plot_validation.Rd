@@ -4,11 +4,13 @@
 \alias{plot_validation}
 \title{Link validation plot}
 \usage{
-plot_validation(links, volume, count, color_field = NULL)
+plot_validation(links, volume, count, color_field = NULL, show_lm = FALSE)
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
-representing a single direction of a single link.}
+representing an analysis link. The function assumes that the data is
+already tidy: two-way links should already be converted to single values,
+etc.}
 
 \item{volume}{Character string identifying the modeled volume in the link
 table.}
@@ -18,15 +20,19 @@ in the link table.}
 
 \item{color_field}{(Optional) character string identifying variable to color
 observations by, for example facility type.}
+
+\item{show_lm}{If \code{TRUE}, plot a linear model regression fit alongside
+the fitted model's equation. Default \code{FALSE} will print spline
+regression fit without any equation.}
 }
 \value{
-A ggplot2 plot object
+A ggplot2 plot object.
 }
 \description{
 Link validation plot
 }
 \examples{
-plot_validation(links, "volume", "count")
+plot_validation(links, "volume", "count", show_lm = TRUE)
 plot_validation(links, "volume", "count", color_field = "facility_group")
 
 }

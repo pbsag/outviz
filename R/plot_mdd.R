@@ -24,6 +24,13 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
         y = as.name(count)
     ))
 
+  # super high-error links, which can arise because of mistakes in the counts,
+  # will disrupt the smoothing. Remove these and throw a warning
+  if(any(links$error > 1e3)){
+    warning("Some links have extremely high error. Confirm the count data.")
+    links <- links %>% filter(error < 1e3)
+  }
+
   # if split by color, then add factor variable of the color field
   if(!is.null(color_field)){
     links <- links %>%
@@ -39,9 +46,9 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
 
   # Add geometries for points and statistics, and return
   p +
-    geom_point(alpha = 0.3) +
+    geom_point(alpha = 0.7) +
     geom_line(data = mdd, aes_string(x = "volume", y = "mdd", color = NULL)) +
-    coord_cartesian(ylim = c(0, 100), xlim = c(0, max(links[, volume]))) +
+    coord_cartesian(ylim = c(0, 125), xlim = c(0, max(links[, volume]))) +
     stat_smooth() +
 
     # Add labels
