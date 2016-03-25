@@ -40,8 +40,7 @@ table_rmse <- function(links, volume, count, group_field = NULL) {
   links <- links %>%
     mutate_(
       .dots = setNames(
-        list(lazyeval::interp(~as.character(factor(x)),
-                              x = as.name(group_field))),
+        list(lazyeval::interp(~factor(x), x = as.name(group_field))),
         group_field
       )
     )
@@ -117,8 +116,7 @@ table_flow <- function(links, volume, count, group_field = NULL) {
   links <- links %>%
     mutate_(
       .dots = setNames(
-        list(lazyeval::interp(~as.character(factor(x)),
-                              x = as.name(group_field))),
+        list(lazyeval::interp(~factor(x), x = as.name(group_field))),
         group_field
       )
     )
