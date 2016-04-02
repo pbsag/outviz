@@ -11,6 +11,9 @@
 #' @param percent boolean, should the table be a percentage?
 #'   default \code{FALSE}
 #'
+#' @details If \code{var1,var2} are numeric vectors, then the name of the field
+#'   will be prepended to the row or column names. If not, then the bare
+#'   attribute name will be given.
 #'
 #' @return an array that can be cast with \code{kable()} or examined directly.
 #'
@@ -21,14 +24,14 @@
 #' crosstable(links, "facility_group", "area_name")
 #' crosstable(links, "facility_group", "area_name", margins = TRUE)
 #' crosstable(links, "facility_group", "area_name", percent = TRUE)
+#' crosstable(links, "facility_group", "area_type", percent = TRUE)
 #'
 #'
 #' @export
 crosstable <- function(df, var1, var2, weight_var = NULL,
                        margins = FALSE, percent = FALSE){
 
-  a <-
-    df %>%
+  a <- df %>%
     transmute_(
       var1, var2,
       # if no weight given, equal weight
@@ -40,8 +43,18 @@ crosstable <- function(df, var1, var2, weight_var = NULL,
 
   m <- as.matrix(a[, -1])
 
-  rownames(m) <- paste(var1, names(table(df[, var1])))
-  colnames(m) <- paste(var2, names(table(df[, var2])))
+  # If the variables are numeric, prepend with variable names
+  for(i in 1:2){
+    #rows are 1, cols are 2
+    if(i == 1){v <- var1} else {v <- var2}
+
+    if(is.numeric(df[[v]])){
+      dimnames(m)[[i]] <- paste(v, names(table(df[, v])))
+    } else {
+      dimnames(m)[[i]] <- names(table(df[, v]))
+    }
+  }
+
 
   # Convert raw numbers to percentages if requested
   if(percent){
@@ -52,9 +65,9 @@ crosstable <- function(df, var1, var2, weight_var = NULL,
   if(margins){
     m <- cbind(m, rowSums(m))
     m <- rbind(m, colSums(m))
-    colnames(m)[ncol(m)] <- paste(var1, "total")
-    rownames(m)[nrow(m)] <- paste(var2, "total")
+    colnames(m)[ncol(m)] <- "Total"
+    rownames(m)[nrow(m)] <- "Total"
   }
 
   return(m)
-}#'
+}

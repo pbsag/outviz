@@ -29,10 +29,16 @@ an array that can be cast with \code{kable()} or examined directly.
 \description{
 Build an attractive cross-tabulation
 }
+\details{
+If \code{var1,var2} are numeric vectors, then the name of the field
+  will be prepended to the row or column names. If not, then the bare
+  attribute name will be given.
+}
 \examples{
 crosstable(links, "facility_group", "area_name")
 crosstable(links, "facility_group", "area_name", margins = TRUE)
 crosstable(links, "facility_group", "area_name", percent = TRUE)
+crosstable(links, "facility_group", "area_type", percent = TRUE)
 
 
 }
