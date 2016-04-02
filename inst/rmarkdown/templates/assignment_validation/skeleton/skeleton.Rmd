@@ -15,10 +15,9 @@ library(ggplot2)
 ```{r area_type}
 volume_var <- "volume"
 count_var <- "count"
-links <- links %>%
-  mutate(area_type = factor(
-    area_type,  labels = c("Urban", "Exurban", "Suburban", "Rural"))
-  )
+
+crosstable(links, "facility_group", "area_name", margins = TRUE) %>%
+  kable(caption = "Links by Facility and Area Type")
 ```
 
 
