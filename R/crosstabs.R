@@ -27,16 +27,16 @@
 crosstable <- function(df, var1, var2, weight_var = NULL,
                        margins = FALSE, percent = FALSE){
 
-  a <- df %>%
+  a <-
+    df %>%
     transmute_(
-      "v1" = var1,
-      "v2" = var2,
+      var1, var2,
       # if no weight given, equal weight
-      "weight" = ifelse(is.null(weight_var), 1, weight_var)
+      weight_var = ifelse(is.null(weight_var), 1, weight_var)
     ) %>%
-    group_by(v1, v2) %>%
-    summarise(n = sum(weight)) %>%
-    spread(v2, n, fill = 0)
+    group_by_(var1, var2) %>%
+    summarise(n = sum(weight_var)) %>%
+    spread_(var2, "n", fill = 0)
 
   m <- as.matrix(a[, -1])
 
