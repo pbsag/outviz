@@ -14,6 +14,10 @@ links <-
     facility_group = factor(
       facility_group,
       labels = c("Expressway", "Highway", "Arterial", "Collector")
+    ),
+    area_name = factor(
+      area_type,
+      labels = c("Urban", "Exurban", "Suburban", "Rural")
     )
   )
 
