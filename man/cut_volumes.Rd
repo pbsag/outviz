@@ -4,10 +4,12 @@
 \alias{cut_volumes}
 \title{Cut volumes into pretty levels}
 \usage{
-cut_volumes(x)
+cut_volumes(x, breaks = c(0, 5, 10, 15, 20, 40, 60, Inf))
 }
 \arguments{
 \item{x}{Volume levels}
+
+\item{breaks}{Breakpoints for the volume groups}
 }
 \value{
 A labeled factor variable of \code{length(x)} with the levels of
