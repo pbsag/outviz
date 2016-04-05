@@ -28,13 +28,9 @@ link_targets <- function(links, volume, count,
   test_frame <- list()
 
   # High volume links
-  if(!is.null(freeway_scope)){
-    f <- links %>%
-      filter_(.dots = freeway_scope) %>%
-      mutate_(
-        error = lazyeval::interp(~abs(pct_error(x, y)),
-                                 x = as.name(volume), y = as.name(count))
-      )
+  if(!is.null(volume_scope)){
+    f <- l %>%
+      filter_(.dots = volume_scope)
 
     # links w/in 20%
     test_frame[["highv"]] <- bind_rows(

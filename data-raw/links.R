@@ -13,7 +13,13 @@ links <-
   mutate(
     facility_group = factor(
       facility_group,
+      levels = 1:4,
       labels = c("Expressway", "Highway", "Arterial", "Collector")
+    ),
+    area_name = factor(
+      area_type,
+      levels = 1:5,
+      labels = c("CBD", "Urban", "Exurban", "Suburban", "Rural")
     )
   )
 

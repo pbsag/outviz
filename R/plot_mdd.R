@@ -38,7 +38,7 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
         "color" = lazyeval::interp(~ factor(var), var = as.name(color_field))
       )
 
-    p <- ggplot(links, aes_string(x = count, y = "error", color = "color")) +
+    p <- ggplot(links, aes_string(x = volume, y = "error", color = "color")) +
       scale_color_discrete(color_field)
   } else {
     p <- ggplot(links, aes_string(x = volume, y = "error"))
