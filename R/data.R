@@ -27,6 +27,7 @@ NULL
 #'   \item{facility_type}{The facility type of the links}
 #'   \item{facility_group}{High-level facility types}
 #'   \item{area_type}{The area type of the links}
+#'   \item{area_name}{The area type of the links with named description}
 #'   \item{volume}{Modeled link volume}
 #'   \item{screenline}{The screenline that the links belong to}
 #'   \item{count}{The calibration year count value}
