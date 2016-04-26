@@ -38,21 +38,21 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
         "color" = lazyeval::interp(~ factor(var), var = as.name(color_field))
       )
 
-    p <- ggplot(links, aes_string(x = volume, y = "error", color = "color")) +
+    p <- ggplot(links, aes_string(x = count, y = "error", color = "color")) +
       scale_color_discrete(color_field)
   } else {
-    p <- ggplot(links, aes_string(x = volume, y = "error"))
+    p <- ggplot(links, aes_string(x = count, y = "error"))
   }
 
   # Add geometries for points and statistics, and return
   p +
     geom_point(alpha = 0.7) +
     geom_line(data = mdd, aes_string(x = "volume", y = "mdd", color = NULL)) +
-    coord_cartesian(ylim = c(0, 125), xlim = c(0, max(links[, volume]))) +
+    coord_cartesian(ylim = c(0, 125), xlim = c(0, max(links[, count]))) +
     stat_smooth() +
 
     # Add labels
     ylab("Percent error from observed volume") +
-    xlab("Modeled link volume")
+    xlab("Observed link volume")
 
 }
