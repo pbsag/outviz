@@ -1,3 +1,20 @@
+#' Numerify a mixed vector
+#'
+#' @param x A mixed vector consisting of items such as `person1` and `3auto`
+#'
+#' @details Serves as a wrapper to `gsub` and `type.convert`
+#'
+#' @examples
+#' x <- c("person1", "person2", "person3")
+#' numerify(x)
+#'
+#' @export
+#'
+numerify <- function(x){
+  type.convert(gsub("[^0-9]", "", x))
+}
+
+
 #' Calculate percent error
 #'
 #' @param x Comparison value
