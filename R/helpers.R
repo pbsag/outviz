@@ -6,6 +6,7 @@
 #' @return a numeric vector of \code{length(x)} containing the percent deviation
 #'   from \code{y}
 #'
+#' @export
 #'
 pct_error <- function(x, y) {
   (x - y) / y * 100
@@ -16,6 +17,8 @@ pct_error <- function(x, y) {
 #' @inheritParams pct_error
 #'
 #' @return The root mean squared error between \code{x} and \code{y}
+#'
+#' @export
 #'
 rmse <- function(x, y){
   n <- length(x)
@@ -29,9 +32,13 @@ rmse <- function(x, y){
 #'
 #' @return The percent root mean squared error between \code{x} and \code{y}
 #'
+#' @export
+#'
 pct_rmse <- function(x, y){
   rmse(x, y) / mean(y) * 100
 }
+
+
 
 
 #' Cut volumes into pretty levels
@@ -40,6 +47,8 @@ pct_rmse <- function(x, y){
 #' @param breaks Breakpoints for the volume groups
 #' @return A labeled factor variable of \code{length(x)} with the levels of
 #'   \code{x} cut into bins.
+#'
+#' @export
 #'
 cut_volumes <- function(x, breaks = c(0, 5, 10, 15, 20, 40, 60, Inf)) {
 
