@@ -56,3 +56,37 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
     xlab("Observed link volume")
 
 }
+
+#' Maximum desirable devation plotly object
+#'
+#' @inheritParams plot_mdd
+#'
+#' @return a plotly object
+#'
+#' @importFrom plotly plot_ly add_trace layout
+#' @importFrom magrittr '%>%'
+#'
+#' @examples
+#' plotly_mdd(links, "volume", "count", "facility_group")
+#'
+#' @export
+#'
+plotly_mdd <- function(links, volume, count, color_field = NULL){
+
+
+  plotly::plot_ly() %>%
+    plotly::add_trace(
+      data = mdd, x = ~volume, y = ~mdd,
+      mode = "lines", type = "scatter", color = I("grey"), showlegend = FALSE) %>%
+    plotly::add_trace(
+      data = mdd, x = ~volume, y = ~mdd * -1, fill = "tonexty",
+      mode = "lines", type = "scatter", color = I("grey"), showlegend = FALSE) %>%
+    plotly::add_trace(
+      x = links[[count]], y = pct_error(links[[volume]], links[[count]]),
+      mode = "markers", type = "scatter", color = links[[color_field]]) %>%
+    plotly::layout(
+      xaxis = list(title = "Count"),
+      yaxis = list(title = "Percent Error from Count", range = c(-100, 200))
+    )
+
+}
