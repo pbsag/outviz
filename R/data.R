@@ -31,6 +31,7 @@ NULL
 #'   \item{volume}{Modeled link volume}
 #'   \item{screenline}{The screenline that the links belong to}
 #'   \item{count}{The calibration year count value}
+#'   \item{distance}{The distance value in miles }
 #' }
 #'
 "links"
