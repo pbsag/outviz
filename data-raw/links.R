@@ -9,7 +9,10 @@ links <-
     volume = Volume,
     screenline = ScreenLine,
     count = Count,
-    distance = Distance
+    distance = Distance,
+    ffspeed = FFSpeed,
+    speed = Speed,
+    capacity = Capacity
   ) %>%
   mutate(
     facility_group = factor(
