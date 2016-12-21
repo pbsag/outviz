@@ -19,6 +19,8 @@
 #' link_stats_table(links, "volume", "count", group_field = "area_name", type = "flow")
 #' link_stats_table(links, "volume", "count", group_field = "facility_group", type = "rmse")
 #' link_stats_table(links, "volume", "count", group_field = "facility_group", type = "flow")
+#' link_measures_table(links, "volume", "distance", group_field = "area_name", type = "vmt")
+#'
 #'
 #'
 #' @export
@@ -103,6 +105,164 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
 }
 
 
+#' Link Measures Table
+#'
+#' @inheritParams plot_validation
+#' @param group_field Character string identifying variable to
+#'   group observations by, for example facility type. If set to same value
+#'   as \code{volume}, will cut into bins.
+#' @param volume_breaks Numeric vector passed on to \code{cut()} identifying the
+#'   breakpoints in the volume groups. Number in thousands, i.e.: 10, 20
+#' @param type Which type of table to print. Currently supports VMT, VHT, VHD and VOC.
+#'
+#' @return A \code{data_frame} with the link summary table.
+#'
+#' @import dplyr
+#' @import lazyeval
+#'
+#' @examples
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vmt")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vmt")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vht")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vht")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vhd")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vhd")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "voc")
+#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "voc")
+#'
+#'
+#'
+#' @export
+link_measures_table <- function(links, volume, distance, speed, ffspeed, capacity, group_field = NULL,
+                             volume_breaks = c(0, 5, 10, 15, 20, 40, 60, Inf),
+                             type = c("vmt", "vht", "vhd", "voc")){
+
+  # must supply group_field
+  if(is.null(group_field)){
+    stop("Must supply grouping variable")
+  }
+
+
+  # If group and volume are the same, cut into a pretty vector,
+  # if they are different, make sure that the variable is factored.
+  if(group_field == volume){
+    links <- volume_levels(links, group_field, volume_breaks)
+    group_field <- "Volume_Group"
+  } else {
+    links <- refactor_levels(links, group_field)
+  }
+
+  # If the type is vmt, then calculate vmt
+  if(type == "vmt"){
+    dots <- list(
+      lazyeval::interp(~n()),
+      lazyeval::interp(~sum(x*y), x = as.name(volume), y = as.name(distance))
+    )
+
+    lt <- links %>%
+      group_by_(group_field) %>%
+      summarise_(.dots = setNames(dots, c("Number of Links", "VMT")))
+
+    # Make the totals row
+    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+
+    tot <- links %>%
+      ungroup() %>%
+      summarise_(.dots = setNames(
+        dots, c("Number of Links", "VMT", as.character(group_field))
+      ))
+
+    suppressWarnings(
+      # this will complain because we are joining a factor to a
+      # character. don't need to worry
+      bind_rows(lt, tot)
+    )
+
+  }
+  else if(type == "vht"){
+    # table by grouping
+    dots <- list(
+      lazyeval::interp(~n()),
+      lazyeval::interp(~sum(x*y/z), x = as.name(volume), y = as.name(distance), z = as.name(speed))
+    )
+
+    lt <- links %>%
+      group_by_(group_field) %>%
+      summarise_(.dots = setNames(dots, c("Number of Links", "VHT")))
+
+    #totals row
+    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+
+    tot <- links %>%
+      ungroup() %>%
+      summarise_(.dots = setNames(
+        dots,  c("Number of Links", "VHT", as.character(group_field))
+      ))
+
+    suppressWarnings(
+      # this will complain because we are joining a factor to a
+      # character. don't need to worry
+      bind_rows(lt, tot)
+    )
+
+  }
+  else if(type == "vhd"){
+    # table by grouping
+    dots <- list(
+      lazyeval::interp(~n()),
+      lazyeval::interp(~sum(x*(y/a-y/b)), x = as.name(volume), y = as.name(distance), a = as.name(speed), b = as.name(ffspeed))
+    )
+
+    lt <- links %>%
+      group_by_(group_field) %>%
+      summarise_(.dots = setNames(dots, c("Number of Links", "VHD")))
+
+    #totals row
+    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+
+    tot <- links %>%
+      ungroup() %>%
+      summarise_(.dots = setNames(
+        dots,  c("Number of Links", "VHD", as.character(group_field))
+      ))
+
+    suppressWarnings(
+      # this will complain because we are joining a factor to a
+      # character. don't need to worry
+      bind_rows(lt, tot)
+    )
+
+  }
+  else if(type == "voc"){
+    # table by grouping
+    dots <- list(
+      lazyeval::interp(~n()),
+      lazyeval::interp(~sum(x/y), x = as.name(volume), y = as.name(capacity))
+    )
+
+    lt <- links %>%
+      group_by_(group_field) %>%
+      summarise_(.dots = setNames(dots, c("Number of Links", "VOC")))
+
+    #totals row
+    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+
+    tot <- links %>%
+      ungroup() %>%
+      summarise_(.dots = setNames(
+        dots,  c("Number of Links", "VOC", as.character(group_field))
+      ))
+
+    suppressWarnings(
+      # this will complain because we are joining a factor to a
+      # character. don't need to worry
+      bind_rows(lt, tot)
+    )
+
+  }
+
+
+}
 
 #' Refactor a variable so that it prints properly.
 #'
