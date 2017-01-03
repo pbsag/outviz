@@ -160,114 +160,49 @@ link_measures_table <- function(links, volume, distance, speed, ffspeed, capacit
     links <- refactor_levels(links, group_field)
   }
 
-  # If the type is vmt, then calculate vmt
   if(type == "vmt"){
-    dots <- list(
-      lazyeval::interp(~n()),
-      lazyeval::interp(~sum(x*y), x = as.name(volume), y = as.name(distance))
-    )
-
-    lt <- links %>%
-      group_by_(group_field) %>%
-      summarise_(.dots = setNames(dots, c("Number of Links", "VMT")))
-
-    # Make the totals row
-    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
-
-    tot <- links %>%
-      ungroup() %>%
-      summarise_(.dots = setNames(
-        dots, c("Number of Links", "VMT", as.character(group_field))
-      ))
-
-    suppressWarnings(
-      # this will complain because we are joining a factor to a
-      # character. don't need to worry
-      bind_rows(lt, tot)
-    )
-
+    # vehicle miles traveled
+    fn_agg <- lazyeval::interp(
+      ~sum(x*y), x = as.name(volume), y = as.name(distance))
+  } else if(type == "vht"){
+    # vehicle hours traveled
+    fn_agg <- lazyeval::interp(
+      ~sum(x*y/z), x = as.name(volume), y = as.name(distance),
+      z = as.name(speed))
+  } else if(type == "vhd"){
+    # vehicle hours of delay
+    fn_agg <- lazyeval::interp(
+      ~sum(x*(y/a-y/b)), x = as.name(volume), y = as.name(distance),
+      a = as.name(speed), b = as.name(ffspeed))
+  } else if(type == "voc"){
+    # volume-to-capacity ratio
+    fn_agg <- lazyeval::interp(
+      ~sum(x/y), x = as.name(volume), y = as.name(capacity))
   }
-  else if(type == "vht"){
-    # table by grouping
-    dots <- list(
-      lazyeval::interp(~n()),
-      lazyeval::interp(~sum(x*y/z), x = as.name(volume), y = as.name(distance), z = as.name(speed))
-    )
 
-    lt <- links %>%
-      group_by_(group_field) %>%
-      summarise_(.dots = setNames(dots, c("Number of Links", "VHT")))
 
-    #totals row
-    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+  # build grouping table
+  dots <- list( lazyeval::interp(~n()), fn_agg)
 
-    tot <- links %>%
-      ungroup() %>%
-      summarise_(.dots = setNames(
-        dots,  c("Number of Links", "VHT", as.character(group_field))
-      ))
+  lt <- links %>%
+    group_by_(group_field) %>%
+    summarise_(.dots = setNames(dots, c("Number of Links", toupper(type))))
 
-    suppressWarnings(
-      # this will complain because we are joining a factor to a
-      # character. don't need to worry
-      bind_rows(lt, tot)
-    )
+  #totals row
+  dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
 
-  }
-  else if(type == "vhd"){
-    # table by grouping
-    dots <- list(
-      lazyeval::interp(~n()),
-      lazyeval::interp(~sum(x*(y/a-y/b)), x = as.name(volume), y = as.name(distance), a = as.name(speed), b = as.name(ffspeed))
-    )
+  tot <- links %>%
+    ungroup() %>%
+    summarise_(.dots = setNames(
+      dots,  c("Number of Links", toupper(type), as.character(group_field))
+    ))
 
-    lt <- links %>%
-      group_by_(group_field) %>%
-      summarise_(.dots = setNames(dots, c("Number of Links", "VHD")))
+  suppressWarnings(
+    # this will complain because we are joining a factor to a
+    # character. don't need to worry
+    bind_rows(lt, tot)
+  )
 
-    #totals row
-    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
-
-    tot <- links %>%
-      ungroup() %>%
-      summarise_(.dots = setNames(
-        dots,  c("Number of Links", "VHD", as.character(group_field))
-      ))
-
-    suppressWarnings(
-      # this will complain because we are joining a factor to a
-      # character. don't need to worry
-      bind_rows(lt, tot)
-    )
-
-  }
-  else if(type == "voc"){
-    # table by grouping
-    dots <- list(
-      lazyeval::interp(~n()),
-      lazyeval::interp(~sum(x/y), x = as.name(volume), y = as.name(capacity))
-    )
-
-    lt <- links %>%
-      group_by_(group_field) %>%
-      summarise_(.dots = setNames(dots, c("Number of Links", "VOC")))
-
-    #totals row
-    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
-
-    tot <- links %>%
-      ungroup() %>%
-      summarise_(.dots = setNames(
-        dots,  c("Number of Links", "VOC", as.character(group_field))
-      ))
-
-    suppressWarnings(
-      # this will complain because we are joining a factor to a
-      # character. don't need to worry
-      bind_rows(lt, tot)
-    )
-
-  }
 
 
 }
