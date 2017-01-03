@@ -127,7 +127,6 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
 #'
 #' @import dplyr
 #' @importFrom lazyeval interp
-#' @importFrom magrittr '%>%'
 #'
 #' @examples
 #' link_measures_table(links, "volume", distance = "distance",
