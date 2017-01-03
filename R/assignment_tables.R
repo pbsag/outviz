@@ -126,22 +126,32 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
 #' @return A \code{data_frame} with the link summary table.
 #'
 #' @import dplyr
-#' @import lazyeval
+#' @importFrom lazyeval interp
+#' @importFrom magrittr '%>%'
 #'
 #' @examples
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vmt")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vmt")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vht")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vht")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vhd")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vhd")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "voc")
-#' link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "voc")
-#'
+#' link_measures_table(links, "volume", distance = "distance",
+#'   group_field = "area_name", type = "vmt")
+#' link_measures_table(links, "volume", distance = "distance",
+#'   group_field = "facility_group", type = "vmt")
+#' link_measures_table(links, "volume", distance = "distance", speed = "speed",
+#'   group_field = "area_name", type = "vht")
+#' link_measures_table(links, "volume", distance = "distance", speed = "speed",
+#'   group_field = "facility_group", type = "vht")
+#' link_measures_table(links, "volume", distance = "distance", speed = "speed",
+#'   ffspeed = "ffspeed",  group_field = "area_name", type = "vhd")
+#' link_measures_table(links, "volume", distance = "distance", speed = "speed",
+#'   ffspeed = "ffspeed",  group_field = "facility_group", type = "vhd")
+#' link_measures_table(links, "volume", capacity = "capacity",
+#'   group_field = "area_name", type = "voc")
+#' link_measures_table(links, "volume", capacity = "capacity",
+#'   group_field = "facility_group", type = "voc")
 #'
 #'
 #' @export
-link_measures_table <- function(links, volume, distance, speed, ffspeed, capacity, group_field = NULL,
+link_measures_table <- function(links, volume, distance = NULL,
+                                speed = NULL, ffspeed = NULL,
+                                capacity = NULL, group_field = NULL,
                              volume_breaks = c(0, 5, 10, 15, 20, 40, 60, Inf),
                              type = c("vmt", "vht", "vhd", "voc")){
 

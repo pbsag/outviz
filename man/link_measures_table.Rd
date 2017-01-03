@@ -4,9 +4,10 @@
 \alias{link_measures_table}
 \title{Link Measures Table}
 \usage{
-link_measures_table(links, volume, distance, speed, ffspeed, capacity,
-  group_field = NULL, volume_breaks = c(0, 5, 10, 15, 20, 40, 60, Inf),
-  type = c("vmt", "vht", "vhd", "voc"))
+link_measures_table(links, volume, distance = NULL, speed = NULL,
+  ffspeed = NULL, capacity = NULL, group_field = NULL,
+  volume_breaks = c(0, 5, 10, 15, 20, 40, 60, Inf), type = c("vmt", "vht",
+  "vhd", "voc"))
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
@@ -41,15 +42,22 @@ A \code{data_frame} with the link summary table.
 Link Measures Table
 }
 \examples{
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vmt")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vmt")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vht")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vht")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "vhd")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "vhd")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "area_name", type = "voc")
-link_measures_table(links, "volume", "distance", "speed", "ffspeed", "capacity", group_field = "facility_group", type = "voc")
-
+link_measures_table(links, "volume", distance = "distance",
+  group_field = "area_name", type = "vmt")
+link_measures_table(links, "volume", distance = "distance",
+  group_field = "facility_group", type = "vmt")
+link_measures_table(links, "volume", distance = "distance", speed = "speed",
+  group_field = "area_name", type = "vht")
+link_measures_table(links, "volume", distance = "distance", speed = "speed",
+  group_field = "facility_group", type = "vht")
+link_measures_table(links, "volume", distance = "distance", speed = "speed",
+  ffspeed = "ffspeed",  group_field = "area_name", type = "vhd")
+link_measures_table(links, "volume", distance = "distance", speed = "speed",
+  ffspeed = "ffspeed",  group_field = "facility_group", type = "vhd")
+link_measures_table(links, "volume", capacity = "capacity",
+  group_field = "area_name", type = "voc")
+link_measures_table(links, "volume", capacity = "capacity",
+  group_field = "facility_group", type = "voc")
 
 
 }
