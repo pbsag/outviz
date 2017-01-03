@@ -43,5 +43,7 @@ link_stats_table(links, "volume", "count", group_field = "facility_group", type 
 link_stats_table(links, "volume", "count", group_field = "facility_group", type = "flow")
 
 
+
+
 }
 

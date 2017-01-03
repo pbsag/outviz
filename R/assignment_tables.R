@@ -19,7 +19,7 @@
 #' link_stats_table(links, "volume", "count", group_field = "area_name", type = "flow")
 #' link_stats_table(links, "volume", "count", group_field = "facility_group", type = "rmse")
 #' link_stats_table(links, "volume", "count", group_field = "facility_group", type = "flow")
-#' link_measures_table(links, "volume", "distance", group_field = "area_name", type = "vmt")
+#'
 #'
 #'
 #'
@@ -114,6 +114,14 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
 #' @param volume_breaks Numeric vector passed on to \code{cut()} identifying the
 #'   breakpoints in the volume groups. Number in thousands, i.e.: 10, 20
 #' @param type Which type of table to print. Currently supports VMT, VHT, VHD and VOC.
+#'
+#' @param distance Character string identifying the distance in the link table.
+#'
+#' @param speed Character string identifying the modeled speed in the link table.
+#'
+#' @param ffspeed Character string identifying the free-flow speed in the link table.
+#'
+#' @param capacity Character string identifying the capacity in the link table.
 #'
 #' @return A \code{data_frame} with the link summary table.
 #'
