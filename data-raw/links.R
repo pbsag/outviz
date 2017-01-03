@@ -8,7 +8,11 @@ links <-
     area_type = `Area Type`,
     volume = Volume,
     screenline = ScreenLine,
-    count = Count
+    count = Count,
+    distance = Distance,
+    ffspeed = FFSpeed,
+    speed = Speed,
+    capacity = Capacity
   ) %>%
   mutate(
     facility_group = factor(

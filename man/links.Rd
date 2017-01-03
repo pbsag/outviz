@@ -14,6 +14,11 @@
   \item{volume}{Modeled link volume}
   \item{screenline}{The screenline that the links belong to}
   \item{count}{The calibration year count value}
+  \item{distance}{The distance value in miles}
+  \item{capacity}{The capacity value of the links}
+  \item{ffspeed}{The free-flow speed of the links in mph}
+  \item{speed}{The speed of the links in mph}
+
 }}
 \usage{
 links

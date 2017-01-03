@@ -10,8 +10,11 @@ Description: We commonly look at the same tables and reports from travel demand
 License: file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1.9000
-Depends: R (>= 3.2.2)
-Imports: dplyr (>= 0.4.3),
+Depends:
+    R (>= 3.2.2)
+Imports:
+    dplyr (>= 0.4.3),
     ggplot2 (>= 2.1.0),
     lazyeval (>= 0.1.10)
-Suggests: knitr
+Suggests:
+    knitr
