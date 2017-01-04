@@ -146,8 +146,8 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
 #' link_measures_table(links, "volume", capacity = "capacity",
 #'   group_field = "facility_group", type = "voc")
 #'
-#'
 #' @export
+#'
 link_measures_table <- function(links, volume, distance = NULL,
                                 speed = NULL, ffspeed = NULL,
                                 capacity = NULL, group_field = NULL,
@@ -186,7 +186,7 @@ link_measures_table <- function(links, volume, distance = NULL,
   } else if(type == "voc"){
     # volume-to-capacity ratio
     fn_agg <- lazyeval::interp(
-      ~sum(x/y), x = as.name(volume), y = as.name(capacity))
+      ~sum(x/y*x/sum(x)), x = as.name(volume), y = as.name(capacity))
   }
 
 
@@ -198,7 +198,11 @@ link_measures_table <- function(links, volume, distance = NULL,
     summarise_(.dots = setNames(dots, c("Number of Links", toupper(type))))
 
   #totals row
-  dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+  if(type == "voc"){
+    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Average")
+  } else {
+    dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
+  }
 
   tot <- links %>%
     ungroup() %>%
