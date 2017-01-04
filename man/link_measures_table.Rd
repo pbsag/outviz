@@ -59,6 +59,5 @@ link_measures_table(links, "volume", capacity = "capacity",
 link_measures_table(links, "volume", capacity = "capacity",
   group_field = "facility_group", type = "voc")
 
-
 }
 

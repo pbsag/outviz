@@ -146,8 +146,8 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
 #' link_measures_table(links, "volume", capacity = "capacity",
 #'   group_field = "facility_group", type = "voc")
 #'
-#'
 #' @export
+#'
 link_measures_table <- function(links, volume, distance = NULL,
                                 speed = NULL, ffspeed = NULL,
                                 capacity = NULL, group_field = NULL,
