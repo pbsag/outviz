@@ -81,3 +81,36 @@ cut_volumes <- function(x, breaks = c(0, 5, 10, 15, 20, 40, 60, Inf)) {
 
 }
 
+
+
+
+#' Cut percent error into ranges
+#'
+#' @param x a vector of error measurements
+#' @return a factor showing the bin
+#'
+cut_error <- function(x){
+  brks <- c(0.05, 0.1, 0.2, 0.5, 1)
+  cut(x, breaks = c(0, brks, Inf))
+}
+
+#' Cut diverging percent error into ranges
+#'
+#' @param x a vector of percent error measurements, as from \link{pct_error}
+#' @return a factor variable with each entry in x binned.
+#'
+cut_diverror <- function(x){
+  brks <- c(0.05, 0.10,  0.20, 1) * 100
+  cut(x, breaks = c(-Inf, rev(-1 * brks), 0, brks, Inf))
+}
+
+
+#' Cut absolute differences into ranges
+#'
+#' @param x a vector of absolute error measurements, as in \eqn{x - y}
+#' @return a factor variable with each entry in x binned.
+#'
+cut_abserror <- function(x){
+  brks <- c(1, 10, 100, 1000)
+  cut(x, breaks = c(-Inf, rev(-1 * brks), 0, brks, Inf))
+}
