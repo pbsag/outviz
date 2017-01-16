@@ -26,7 +26,9 @@ numerify <- function(x){
 #' @export
 #'
 pct_error <- function(x, y) {
-  (x - y) / y * 100
+  ifelse(
+    x == 0 & y == 0, 0, # protect against divide by zero on empty links
+    (x - y) / y * 100)
 }
 
 #' Calculate RMSE
