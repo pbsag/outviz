@@ -32,7 +32,7 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
   }
 
 
-  # Add
+  # Add ribbon to background
   p <- ggplot() +
     geom_ribbon(
       data = mdd %>% mutate(mdd1 = -1 * mdd),
@@ -45,10 +45,13 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
 
   # if split by color, then add factor variable of the color field
   if(!is.null(color_field)){
-    links <- links %>%
-      mutate_(
-        "color" = lazyeval::interp(~ factor(var), var = as.name(color_field))
-      )
+    if(!is.factor(links[[color_field]])){ #unless it's already a factor!
+      links <- mutate_(links,
+        "color" = lazyeval::interp(~ factor(var), var = as.name(color_field)))
+    } else {
+      links <- mutate_(links,
+        "color" = lazyeval::interp(~ var, var = as.name(color_field)))
+    }
 
     p +
       geom_point(data = links, aes_(
