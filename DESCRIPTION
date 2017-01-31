@@ -15,6 +15,7 @@ Depends:
 Imports:
     dplyr (>= 0.4.3),
     ggplot2 (>= 2.1.0),
-    lazyeval (>= 0.1.10)
-Suggests:
-    knitr
+    lazyeval (>= 0.1.10),
+    magrittr,
+    plotly
+Suggests: knitr

@@ -63,3 +63,25 @@ plot_validation <- function(links, volume, count, color_field = NULL,
   }
 
 }
+
+#' Link validation plot with plot.ly
+#'
+#' @inheritParams plot_validation
+#'
+#' @importFrom plotly plot_ly add_lines add_trace layout
+#' @export
+#'
+plotly_validation <- function(links, volume, count, color_field = NULL){
+
+  plotly::plot_ly() %>%
+    plotly::add_lines(
+      x = c(1, max(links[[volume]])), y = c(1, max(links[[volume]])),
+      alpha = 0.5, showlegend = FALSE, color = I("grey")) %>%
+    plotly::add_trace(
+      x = ~links[[count]], y = ~links[[volume]],
+      color = ~links[[color_field]],
+      type = "scatter", mode = "markers") %>%
+    plotly::layout( xaxis = list(title = "Count"), yaxis = list(title = "Model Volume") )
+
+
+}
