@@ -13,5 +13,7 @@ RoxygenNote: 5.0.1.9000
 Depends: R (>= 3.2.2)
 Imports: dplyr (>= 0.4.3),
     ggplot2 (>= 2.1.0),
-    lazyeval (>= 0.1.10)
+    lazyeval (>= 0.1.10),
+    magrittr,
+    plotly
 Suggests: knitr
