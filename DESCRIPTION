@@ -1,8 +1,8 @@
 Package: outviz
 Type: Package
 Title: Build Output Tables and Visualizations for Travel Models
-Version: 0.0.3
-Date: 2016-03-21
+Version: 0.0.5
+Date: 2017-01-04
 Authors@R: person("Greg", "Macfarlane", email = "macfarlaneg@pbworld.com", role = c("aut", "cre"))
 Description: We commonly look at the same tables and reports from travel demand
     models. This package standardizes these reports and provides an easy tool
@@ -10,8 +10,10 @@ Description: We commonly look at the same tables and reports from travel demand
 License: file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1.9000
-Depends: R (>= 3.2.2)
-Imports: dplyr (>= 0.4.3),
+Depends:
+    R (>= 3.2.2)
+Imports:
+    dplyr (>= 0.4.3),
     ggplot2 (>= 2.1.0),
     lazyeval (>= 0.1.10),
     magrittr,
