@@ -19,7 +19,7 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
   links <- links %>%
     mutate_(
       "error" = lazyeval::interp(
-        ~ abs(pct_error(x, y)),
+        ~ pct_error(x, y),
         x = as.name(volume),
         y = as.name(count)
     ))
@@ -31,6 +31,18 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
     links <- links %>% filter(error < 1e3)
   }
 
+
+  # Add
+  p <- ggplot() +
+    geom_ribbon(
+      data = mdd %>% mutate(mdd1 = -1 * mdd),
+      aes(x = volume, ymax = mdd, ymin = mdd1), alpha = 0.2) +
+    coord_cartesian(ylim = c(-100, 125), xlim = c(0, max(links[, count]))) +
+
+    # Add labels
+    ylab("Percent error from observed volume") +
+    xlab("Observed link volume")
+
   # if split by color, then add factor variable of the color field
   if(!is.null(color_field)){
     links <- links %>%
@@ -38,22 +50,17 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
         "color" = lazyeval::interp(~ factor(var), var = as.name(color_field))
       )
 
-    p <- ggplot(links, aes_string(x = count, y = "error", color = "color")) +
+    p +
+      geom_point(data = links, aes_(
+        x = as.name(count), as.name("error"), color = as.name("color")),
+        alpha = 0.7) +
       scale_color_discrete(color_field)
   } else {
-    p <- ggplot(links, aes_string(x = count, y = "error"))
+    p +
+      geom_point(data = links, aes_(x = as.name(count), as.name("error")),
+        alpha = 0.7)
   }
 
-  # Add geometries for points and statistics, and return
-  p +
-    geom_point(alpha = 0.7) +
-    geom_line(data = mdd, aes_string(x = "volume", y = "mdd", color = NULL)) +
-    coord_cartesian(ylim = c(0, 125), xlim = c(0, max(links[, count]))) +
-    stat_smooth() +
-
-    # Add labels
-    ylab("Percent error from observed volume") +
-    xlab("Observed link volume")
 
 }
 
