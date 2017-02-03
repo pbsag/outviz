@@ -39,3 +39,16 @@ NULL
 #' }
 #'
 "links"
+
+#' District-to-District Flows
+#'
+#' A dataset containing district-to-district flows.
+#'
+#' @format A data frame with 20 observations and 3 variables.
+#' \describe{
+#'   \item{origin}{Origin zone}
+#'   \item{destination}{Destination zone}
+#'   \item{flow}{Flow from origin to destination}
+#' }
+#'
+"flows"
