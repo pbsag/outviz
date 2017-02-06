@@ -34,9 +34,9 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
   }
 
 
-  # If group and volume are the same, cut into a pretty vector,
+  # If group and count are the same, cut into a pretty vector,
   # if they are different, make sure that the variable is factored.
-  if(group_field == volume){
+  if(group_field == count){
     links <- volume_levels(links, group_field, volume_breaks)
     group_field <- "Volume_Group"
   } else {
@@ -72,13 +72,13 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
   } else if(type == "flow"){
     # table by grouping
     dots <- list(
-      lazyeval::interp(~sum(x), x = as.name(volume)),
-      lazyeval::interp(~sum(x), x = as.name(count))
+      lazyeval::interp(~sum(x), x = as.name(count)),
+      lazyeval::interp(~sum(x), x = as.name(volume))
     )
 
     lt <- links %>%
       group_by_(group_field) %>%
-      summarise_(.dots = setNames(dots, c("Model Flow", "Observed Flow")))
+      summarise_(.dots = setNames(dots, c("Observed Flow", "Model Flow")))
 
     #totals row
     dots[[3]] <- lazyeval::interp(~as.character(x), x = "Total")
@@ -86,7 +86,7 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
     tot <- links %>%
       ungroup() %>%
       summarise_(.dots = setNames(
-        dots,  c("Model Flow", "Observed Flow", as.character(group_field))
+        dots,  c("Observed Flow", "Model Flow", as.character(group_field))
       ))
 
     suppressWarnings(
@@ -94,7 +94,7 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
       # character. don't need to worry
       bind_rows(lt, tot) %>%
         mutate(
-          `Percent Deviation` = pct_error(`Model Flow`, `Observed Flow`)
+          `Percent Deviation` = pct_error(`Observed Flow`, `Model Flow`)
         )
     )
 
