@@ -2,17 +2,17 @@
 % Please edit documentation in R/helpers.R
 \name{cut_diverror}
 \alias{cut_diverror}
-\title{Cut diverging percent error into ranges}
+\title{Cut diverging differences into ranges}
 \usage{
 cut_diverror(x)
 }
 \arguments{
-\item{x}{a vector of percent error measurements, as from \link{pct_error}}
+\item{x}{a vector of diverging error measurements, as in \eqn{x - y}}
 }
 \value{
 a factor variable with each entry in x binned.
 }
 \description{
-Cut diverging percent error into ranges
+Cut diverging differences into ranges
 }
 

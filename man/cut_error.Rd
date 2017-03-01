@@ -2,17 +2,30 @@
 % Please edit documentation in R/helpers.R
 \name{cut_error}
 \alias{cut_error}
-\title{Cut percent error into ranges}
+\title{Cut error measurements into ranges}
 \usage{
-cut_error(x)
+cut_error(x, breaks = c(5, 10, 20, 1), negative = TRUE)
 }
 \arguments{
-\item{x}{a vector of error measurements}
+\item{x}{a vector of percent error measurements, as from \link{pct_error}}
+
+\item{breaks}{A vector of error ranges; zero and infinity will be added.}
+
+\item{negative}{Mirror the breaks on the negative side, default is TRUE.}
 }
 \value{
-a factor showing the bin
+a factor variable with each entry in x binned.
 }
 \description{
-Cut percent error into ranges
+Cut error measurements into ranges
+}
+\details{
+This is a convenience wrapper to \code{\link[base](cut)} with
+  sensible pre-coded options for travel demand output analysis.
+}
+\examples{
+cuts <- cut_error(rnorm(100, 0, 10))
+table(cuts)
+
 }
 

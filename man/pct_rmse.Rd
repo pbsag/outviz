@@ -17,4 +17,16 @@ The percent root mean squared error between \code{x} and \code{y}
 \description{
 Calculate percent RMSE
 }
+\details{
+\eqn{\sqrt{\sum(x - y)^2/(n - 1)} / \bar{y} * 100}
+}
+\examples{
+x <- runif(10)
+y <- x + rnorm(10)
+pct_rmse(x, y)
+
+}
+\seealso{
+rmse
+}
 

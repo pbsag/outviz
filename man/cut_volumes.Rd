@@ -18,4 +18,10 @@ A labeled factor variable of \code{length(x)} with the levels of
 \description{
 Cut volumes into pretty levels
 }
+\examples{
+cuts <- cut_volumes(links$volume)
+cuts[1:10]
+table(cuts)
+
+}
 
