@@ -18,6 +18,7 @@ Imports:
     lazyeval (>= 0.1.10),
     magrittr,
     plotly,
-    chorddiag
+    chorddiag,
+    tidyr
 Remotes: mattflor/chorddiag
 Suggests: knitr
