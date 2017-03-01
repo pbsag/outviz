@@ -11,6 +11,7 @@
 #'
 #' @importFrom dplyr select_
 #' @importFrom magrittr '%>%'
+#' @importFrom chorddiag chorddiag
 #'
 #' @export
 #'
