@@ -17,5 +17,8 @@ Imports:
     ggplot2 (>= 2.1.0),
     lazyeval (>= 0.1.10),
     magrittr,
-    plotly
+    plotly,
+    chorddiag,
+    tidyr
+Remotes: mattflor/chorddiag
 Suggests: knitr
