@@ -4,7 +4,7 @@
 \alias{plot_mdd}
 \title{Maximum desirable deviation plot}
 \usage{
-plot_mdd(links, volume, count, color_field = NULL)
+plot_mdd(links, volume, count, color_field = NULL, id = NULL)
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
@@ -20,6 +20,8 @@ in the link table.}
 
 \item{color_field}{(Optional) character string identifying variable to color
 observations by, for example facility type.}
+
+\item{id}{A link identification field. If NULL, then use \code{rownames(links)}}
 }
 \value{
 A ggplot2 plot object

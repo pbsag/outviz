@@ -4,7 +4,7 @@
 \alias{plotly_validation}
 \title{Link validation plot with plot.ly}
 \usage{
-plotly_validation(links, volume, count, color_field = NULL)
+plotly_validation(links, volume, count, color_field, id = NULL)
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
@@ -20,8 +20,14 @@ in the link table.}
 
 \item{color_field}{(Optional) character string identifying variable to color
 observations by, for example facility type.}
+
+\item{id}{A link identification field. If NULL, then use \code{rownames(links)}}
 }
 \description{
 Link validation plot with plot.ly
+}
+\examples{
+plotly_validation(links, "volume", "count", "facility_group")
+
 }
 
