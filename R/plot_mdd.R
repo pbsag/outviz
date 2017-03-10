@@ -13,7 +13,9 @@
 #' plot_mdd(links, "volume", "count", color_field = "facility_group")
 #'
 #' @export
-plot_mdd <- function(links, volume, count, color_field = NULL) {
+plot_mdd <- function(links, volume, count, color_field = NULL, id = NULL) {
+
+  if(!is.null(id)){ row.names(links) <- links[[id]] }
 
   # calculate absolute percent error on links
   links <- links %>%
@@ -23,6 +25,7 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
         x = as.name(volume),
         y = as.name(count)
     ))
+
 
   # super high-error links, which can arise because of mistakes in the counts,
   # will disrupt the smoothing. Remove these and throw a warning
@@ -65,6 +68,7 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
   }
 
 
+
 }
 
 #' Maximum desirable devation plotly object
@@ -81,7 +85,9 @@ plot_mdd <- function(links, volume, count, color_field = NULL) {
 #'
 #' @export
 #'
-plotly_mdd <- function(links, volume, count, color_field = NULL){
+plotly_mdd <- function(links, volume, count, color_field, id = NULL){
+
+  if(!is.null(id)){ row.names(links) <- links[[id]] }
 
 
   plotly::plot_ly() %>%
@@ -93,7 +99,8 @@ plotly_mdd <- function(links, volume, count, color_field = NULL){
       mode = "lines", type = "scatter", color = I("grey"), showlegend = FALSE) %>%
     plotly::add_trace(
       x = links[[count]], y = pct_error(links[[volume]], links[[count]]),
-      mode = "markers", type = "scatter", color = links[[color_field]]) %>%
+      mode = "markers", type = "scatter", color = links[[color_field]],
+      text = ~paste("ID: ", row.names(links))) %>%
     plotly::layout(
       xaxis = list(title = "Count"),
       yaxis = list(title = "Percent Error from Count", range = c(-100, 200))

@@ -14,6 +14,7 @@
 #' @param show_lm If \code{TRUE}, plot a linear model regression fit alongside
 #'   the fitted model's equation. Default \code{FALSE} will print spline
 #'   regression fit without any equation.
+#' @param id A link identification field. If NULL, then use \code{rownames(links)}
 #'
 #' @return A ggplot2 plot object.
 #'
@@ -28,7 +29,7 @@
 #'
 #' @export
 plot_validation <- function(links, volume, count, color_field = NULL,
-                            show_lm = FALSE) {
+                            show_lm = FALSE, id = NULL) {
 
   # if split by color, then add factor variable of the color field
   if(!is.null(color_field)){
@@ -42,6 +43,8 @@ plot_validation <- function(links, volume, count, color_field = NULL,
   } else {
     p <- ggplot(links, aes_string(x = count, y = volume))
   }
+
+  if(!is.null(id)){ row.names(links) <- links[[id]] }
 
   # Add geometries for points and statistics, and return
   p <- p +
@@ -69,9 +72,15 @@ plot_validation <- function(links, volume, count, color_field = NULL,
 #' @inheritParams plot_validation
 #'
 #' @importFrom plotly plot_ly add_lines add_trace layout
+#' @examples
+#' plotly_validation(links, "volume", "count", "facility_group")
+#'
 #' @export
 #'
-plotly_validation <- function(links, volume, count, color_field = NULL){
+plotly_validation <- function(links, volume, count, color_field, id = NULL){
+
+  if(!is.null(id)){ row.names(links) <- links[[id]] }
+
 
   plotly::plot_ly() %>%
     plotly::add_lines(
@@ -80,7 +89,8 @@ plotly_validation <- function(links, volume, count, color_field = NULL){
     plotly::add_trace(
       x = ~links[[count]], y = ~links[[volume]],
       color = ~links[[color_field]],
-      type = "scatter", mode = "markers") %>%
+      type = "scatter", mode = "markers",
+      text = ~paste("ID: ", row.names(links))) %>%
     plotly::layout( xaxis = list(title = "Count"), yaxis = list(title = "Model Volume") )
 
 
