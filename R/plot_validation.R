@@ -59,7 +59,7 @@ plot_validation <- function(links, volume, count, color_field = NULL,
         parse = TRUE) +
       geom_smooth(method = "lm", se = ifelse(is.null(color_field), TRUE, FALSE))
   } else {
-    p + geom_smooth()
+    p
   }
 
 }
