@@ -107,3 +107,36 @@ plotly_mdd <- function(links, volume, count, color_field, id = NULL){
     )
 
 }
+
+#' Create mdd table
+#'
+#' @param from Where the table should start.
+#' @param to the maximum value of the table.
+#' @param step the step size for \code{seq()}.
+#'
+#' @return a data frame containing the maximum desirable deviation for a range
+#'   of volumes.
+#'
+#' @import dplyr
+#' @importFrom magrittr '%>%'
+#'
+#' @examples
+#' mdd_table()
+#' mdd_table(from = 0, to = 100000, step = 20000)
+#'
+#' @export
+
+mdd_table <- function(from = 10000, to = 150000, step = 10000){
+  mdd <- dplyr::data_frame(
+    volume = seq(from, to, by = step),
+    mdd = seq(from, to, by = step)
+  )
+
+  mdd$mdd <- dplyr::case_when(
+    mdd$mdd <= 50000 ~ 11.65 * mdd$mdd ^ -.37752,
+    mdd$mdd <= 90000 ~ 400 * mdd$mdd ^ -.7,
+    TRUE ~ .157 - mdd$mdd * .0000002
+  )
+
+  return(mdd)
+}
