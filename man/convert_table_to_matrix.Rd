@@ -20,4 +20,3 @@ a square matrix
 \description{
 Convert a dataframe to a matrix
 }
-

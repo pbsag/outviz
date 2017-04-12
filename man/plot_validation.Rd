@@ -39,4 +39,3 @@ plot_validation(links, "volume", "count", show_lm = TRUE)
 plot_validation(links, "volume", "count", color_field = "facility_group")
 
 }
-

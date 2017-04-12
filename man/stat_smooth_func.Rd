@@ -102,7 +102,7 @@ Add function equation to statistical smoothing
   \item{se}{standard error}
 }
 }
+
 \author{
 kdauria
 }
-

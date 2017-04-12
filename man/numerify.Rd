@@ -20,4 +20,3 @@ x <- c("person1", "person2", "person3")
 numerify(x)
 
 }
-

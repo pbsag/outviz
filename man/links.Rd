@@ -28,4 +28,3 @@ A dataset containing example link volume and count information to demonstrate
 package functionality.
 }
 \keyword{datasets}
-

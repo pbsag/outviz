@@ -68,7 +68,9 @@ labels in a bipartite diagram.}
   \item{ticklabelFontsize}{Numeric font size in pixels for the tick labels.}
   \item{fadeLevel}{Numeric chord fade level (opacity value between 0 and 1,
 defaults to 0.1).}
-  \item{showTooltips}{A logical scalar.}
+  \item{showTooltips}{A logical scalar (defaults to TRUE).}
+  \item{showZeroTooltips}{A logical scalar (defaults to TRUE). If set to FALSE,
+tooltips for the value zero are hidden.}
   \item{tooltipNames}{A vector of character strings to be used for group
 labeling in tooltips. By default equal to \code{groupNames}.}
   \item{tooltipUnit}{A character string for the units to be used in tooltips.}
@@ -78,7 +80,8 @@ labeling in tooltips. By default equal to \code{groupNames}.}
 triangle pointing from source to target.}
   \item{precision}{Integer number of significant digits to be used for tooltip
 display.}
-  \item{clickAction}{character string containing JavaScript code to be executed on a mouse click so that shiny can get the sourceIndex and targetIndex for the purpose of filtering the data on other visualizations}
+  \item{clickAction}{character string containing JavaScript code to be executed
+on a mouse click so that shiny can get the sourceIndex and targetIndex for the purpose of filtering the data on other visualizations}
 }}
 }
 \value{
@@ -88,4 +91,3 @@ An htmlwidgets object showing the flow between origins and destinations
 \description{
 Create an HTML chord diagram from matrix information
 }
-

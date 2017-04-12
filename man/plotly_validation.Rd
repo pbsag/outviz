@@ -30,4 +30,3 @@ Link validation plot with plot.ly
 plotly_validation(links, "volume", "count", "facility_group")
 
 }
-
