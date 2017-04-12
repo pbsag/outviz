@@ -34,6 +34,8 @@ plot_mdd <- function(links, volume, count, color_field = NULL, id = NULL) {
     links <- links %>% filter(error < 1e3)
   }
 
+  # generate the mdd table
+  mdd <- mdd_table(to = max(links[, volume]) + 10000)
 
   # Add ribbon to background
   p <- ggplot() +
@@ -89,6 +91,7 @@ plotly_mdd <- function(links, volume, count, color_field, id = NULL){
 
   if(!is.null(id)){ row.names(links) <- links[[id]] }
 
+  mdd <- mdd_table(to = max(links[, volume]) + 10000)
 
   plotly::plot_ly() %>%
     plotly::add_trace(
