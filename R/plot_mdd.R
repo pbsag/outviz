@@ -122,20 +122,20 @@ plotly_mdd <- function(links, volume, count, color_field, id = NULL){
 #'
 #' @examples
 #' mdd_table()
-#' mdd_table(from = 0, to = 100000, step = 20000)
+#' mdd_table(from = 10000, to = 100000, step = 20000)
 #'
 #' @export
 
-mdd_table <- function(from = 10000, to = 150000, step = 10000){
+mdd_table <- function(from = 1000, to = 151000, step = 10000){
   mdd <- dplyr::data_frame(
     volume = seq(from, to, by = step),
     mdd = seq(from, to, by = step)
   )
 
   mdd$mdd <- dplyr::case_when(
-    mdd$mdd <= 50000 ~ 11.65 * mdd$mdd ^ -.37752,
-    mdd$mdd <= 90000 ~ 400 * mdd$mdd ^ -.7,
-    TRUE ~ .157 - mdd$mdd * .0000002
+    mdd$mdd <= 50000 ~ (11.65 * mdd$mdd ^ -.37752) * 100,
+    mdd$mdd <= 90000 ~ (400 * mdd$mdd ^ -.7) * 100,
+    TRUE ~ (.157 - mdd$mdd * .0000002) * 100
   )
 
   return(mdd)
