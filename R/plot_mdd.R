@@ -34,6 +34,8 @@ plot_mdd <- function(links, volume, count, color_field = NULL, id = NULL) {
     links <- links %>% filter(error < 1e3)
   }
 
+  # generate the mdd table
+  mdd <- mdd_table(to = max(links[, volume]) + 10000)
 
   # Add ribbon to background
   p <- ggplot() +
@@ -89,6 +91,7 @@ plotly_mdd <- function(links, volume, count, color_field, id = NULL){
 
   if(!is.null(id)){ row.names(links) <- links[[id]] }
 
+  mdd <- mdd_table(to = max(links[, volume]) + 10000)
 
   plotly::plot_ly() %>%
     plotly::add_trace(
@@ -106,4 +109,42 @@ plotly_mdd <- function(links, volume, count, color_field, id = NULL){
       yaxis = list(title = "Percent Error from Count", range = c(-100, 200))
     )
 
+}
+
+#' Create mdd table
+#'
+#' @description Creates a data frame containing the maximum desirable deviation
+#'   for a range of volumes using the guidance provided in NCHRP report 255
+#'   (updated by NCHRP 765). The MDD curve is a step-wise function that accepts
+#'   larger deviations on roads with lower volume.
+#'
+#' @param from Where the table should start.
+#' @param to the maximum value of the table.
+#' @param step the step size for \code{seq()}.
+#'
+#' @return a data frame containing the maximum desirable deviation for a range
+#'   of volumes.
+#'
+#' @import dplyr
+#' @importFrom magrittr '%>%'
+#'
+#' @examples
+#' mdd_table()
+#' mdd_table(from = 10000, to = 100000, step = 20000)
+#'
+#' @export
+
+mdd_table <- function(from = 1000, to = 151000, step = 10000){
+  mdd <- dplyr::data_frame(
+    volume = seq(from, to, by = step),
+    mdd = seq(from, to, by = step)
+  )
+
+  mdd$mdd <- dplyr::case_when(
+    mdd$mdd <= 50000 ~ (11.65 * mdd$mdd ^ -.37752) * 100,
+    mdd$mdd <= 90000 ~ (400 * mdd$mdd ^ -.7) * 100,
+    TRUE ~ (.157 - mdd$mdd * .0000002) * 100
+  )
+
+  return(mdd)
 }

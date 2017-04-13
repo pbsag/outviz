@@ -18,4 +18,3 @@ a numeric vector of \code{length(x)} containing the percent deviation
 \description{
 Calculate percent error
 }
-

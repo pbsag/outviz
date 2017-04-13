@@ -19,4 +19,3 @@ A data_frame with the volume variable recoded into factors
 \description{
 Cut a volumes variable into levels
 }
-

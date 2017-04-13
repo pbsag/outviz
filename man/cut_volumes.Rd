@@ -18,4 +18,3 @@ A labeled factor variable of \code{length(x)} with the levels of
 \description{
 Cut volumes into pretty levels
 }
-
