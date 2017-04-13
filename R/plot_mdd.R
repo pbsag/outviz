@@ -113,6 +113,11 @@ plotly_mdd <- function(links, volume, count, color_field, id = NULL){
 
 #' Create mdd table
 #'
+#' @description Creates a data frame containing the maximum desirable deviation
+#'   for a range of volumes using the guidance provided in NCHRP report 255
+#'   (updated by NCHRP 765). The MDD curve is a step-wise function that accepts
+#'   larger deviations on roads with lower volume.
+#'
 #' @param from Where the table should start.
 #' @param to the maximum value of the table.
 #' @param step the step size for \code{seq()}.

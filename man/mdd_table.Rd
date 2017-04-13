@@ -18,7 +18,10 @@ a data frame containing the maximum desirable deviation for a range
   of volumes.
 }
 \description{
-Create mdd table
+Creates a data frame containing the maximum desirable deviation
+  for a range of volumes using the guidance provided in NCHRP report 255
+  (updated by NCHRP 765). The MDD curve is a step-wise function that accepts
+  larger deviations on roads with lower volume.
 }
 \examples{
 mdd_table()
