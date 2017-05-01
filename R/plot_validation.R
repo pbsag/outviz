@@ -29,7 +29,7 @@
 #'
 #' @export
 plot_validation <- function(links, volume, count, color_field = NULL,
-                            show_lm = FALSE, id = NULL) {
+                            show_lm = TRUE, id = NULL) {
 
   # if split by color, then add factor variable of the color field
   if(!is.null(color_field)){
@@ -77,21 +77,81 @@ plot_validation <- function(links, volume, count, color_field = NULL,
 #'
 #' @export
 #'
-plotly_validation <- function(links, volume, count, color_field, id = NULL){
+plotly_validation <- function(links, volume, count, color_field = NULL,
+                              id = NULL, show_lm = TRUE){
 
-  if(!is.null(id)){ row.names(links) <- links[[id]] }
+  # The floating text in the chart gives the link id. If no field provided,
+  # create one full of "na" values.
+  if(is.null(id)){
+    links$id <- "na"
+    id <- "id"
+  }
 
+  # if split by color, then add factor variable of the color field
+  if(!is.null(color_field)){
+    links <- links %>%
+      mutate_(
+        "color" = lazyeval::interp(~ factor(var), var = as.name(color_field))
+      )
+  }
 
-  plotly::plot_ly() %>%
+  # Calculate a linear model and create a text annotation for plot
+  df <- data_frame(
+    y = links[[volume]],
+    x = links[[count]]
+  )
+
+  model <- lm(y ~ x, data = df)
+  slope = round(coefficients(model)[2], 3)
+  intercept = round(coefficients(model)[1], 2)
+  if (intercept > 0) {
+    sign = "-"
+  } else {
+    sign = "+"
+  }
+  equation <- paste0("y = ", slope, "x ", sign, " ", intercept)
+
+  # Create initial plot with a simple y = x line
+  p <- plotly::plot_ly() %>%
     plotly::add_lines(
       x = c(1, max(links[[volume]])), y = c(1, max(links[[volume]])),
-      alpha = 0.5, showlegend = FALSE, color = I("grey")) %>%
-    plotly::add_trace(
-      x = ~links[[count]], y = ~links[[volume]],
-      color = ~links[[color_field]],
-      type = "scatter", mode = "markers",
-      text = ~paste("ID: ", row.names(links))) %>%
+      alpha = 0.5, showlegend = FALSE, color = I("grey"))
+
+  # Add data colored by color_field if it was provided. Otherwise leave the
+  # color option blank.
+  if(!is.null(color_field)){
+    p <- p %>%
+      plotly::add_trace(
+        x = ~links[[count]], y = ~links[[volume]],
+        color = ~links[[color_field]],
+        type = "scatter", mode = "markers",
+        text = ~paste("ID: ", links[[id]])
+      )
+  } else {
+    p <- p %>%
+      plotly::add_trace(
+        x = ~links[[count]], y = ~links[[volume]],
+        type = "scatter", mode = "markers",
+        text = ~paste("ID: ", links[[id]])
+      )
+  }
+
+  # Add the linear regression line and equation
+  if(show_lm){
+    p <- p %>%
+      plotly::add_lines(
+        x = links[[count]], y = stats::fitted(model),
+        alpha = 0.5, showlegend = FALSE, color = I("blue")
+      ) %>%
+      plotly::add_text(
+        x = 10000, y = max(links[[volume]]), text = equation,
+        showlegend = FALSE
+      )
+  }
+
+  # Add axis information
+  p <- p %>%
     plotly::layout( xaxis = list(title = "Count"), yaxis = list(title = "Model Volume") )
 
-
+  p
 }

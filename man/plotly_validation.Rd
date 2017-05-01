@@ -4,7 +4,8 @@
 \alias{plotly_validation}
 \title{Link validation plot with plot.ly}
 \usage{
-plotly_validation(links, volume, count, color_field, id = NULL)
+plotly_validation(links, volume, count, color_field = NULL, id = NULL,
+  show_lm = TRUE)
 }
 \arguments{
 \item{links}{Model link table as a \code{tidy} data frame, with each row
@@ -22,6 +23,10 @@ in the link table.}
 observations by, for example facility type.}
 
 \item{id}{A link identification field. If NULL, then use \code{rownames(links)}}
+
+\item{show_lm}{If \code{TRUE}, plot a linear model regression fit alongside
+the fitted model's equation. Default \code{FALSE} will print spline
+regression fit without any equation.}
 }
 \description{
 Link validation plot with plot.ly
