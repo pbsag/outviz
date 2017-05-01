@@ -38,6 +38,9 @@ links <-
       labels = c("CBD", "Urban", "Exurban", "Suburban", "Rural")
     )
   )
+
+crosstable(links, "facility_group", "area_name", margins = TRUE) %>%
+  kable(caption = "Links by Facility and Area Type")
 ```
 
 ```{r targets}

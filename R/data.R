@@ -11,7 +11,8 @@ NULL
 #'
 #' @format A data frame with 505 observations and 8 variables.
 #' \describe{
-#'   \item{a, b}{Node identifiers}
+#'   \item{a}{Node identifier}
+#'   \item{b}{Node identifier}
 #'   \item{facility_type}{The facility type of the links}
 #'   \item{facility_group}{High-level facility types}
 #'   \item{area_type}{The area type of the links}
