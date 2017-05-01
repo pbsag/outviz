@@ -4,7 +4,7 @@
 \alias{plot_validation}
 \title{Link validation plot}
 \usage{
-plot_validation(links, volume, count, color_field = NULL, show_lm = FALSE,
+plot_validation(links, volume, count, color_field = NULL, show_lm = TRUE,
   id = NULL)
 }
 \arguments{
