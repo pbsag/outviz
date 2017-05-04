@@ -94,7 +94,7 @@ link_stats_table <- function(links, volume, count, group_field = NULL,
       # character. don't need to worry
       bind_rows(lt, tot) %>%
         mutate(
-          `Percent Deviation` = pct_error(`Observed Flow`, `Model Flow`)
+          `Percent Deviation` = pct_error(`Model Flow`, `Observed Flow`)
         )
     )
 
