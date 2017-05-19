@@ -41,17 +41,17 @@ plot_tlfd <- function(model, target, names, xaxis, yaxis){
 plotly_tlfd <- function(model, target = NULL, names = c("model", "target"),
                         xaxis = "bin", yaxis = "count"){
 
-  p <- plot_ly(x = ~bin, y = ~count) %>%
-    add_trace(data = model, name = names[1], type = "scatter", mode = "lines")
+  p <- plotly::plot_ly(x = ~bin, y = ~count) %>%
+    plotly::add_trace(data = model, name = names[1], type = "scatter", mode = "lines")
 
   if (!is.null(target)) {
     p <- p %>%
-      add_trace(data = target, name = names[2], type = "bar")
+      plotly::add_trace(data = target, name = names[2], type = "bar")
   }
 
   # Set axis labels
   p <- p %>%
-    layout(
+    plotly::layout(
       xaxis = list(title = xaxis),
       yaxis = list(title = yaxis)
     )
@@ -61,7 +61,7 @@ plotly_tlfd <- function(model, target = NULL, names = c("model", "target"),
 
 #' Prepares model data for tlfd plotting. Given a skim table and model trip
 #' table, will return a table in the format needed by \code{plotly_tlfd} and
-#' \code{plot_tlfd}.
+#' \code{plot_tlfd}. Also calculates average impedance and intrazonal percent.
 #'
 #' @param skim An impedance dataframe with the following columns
 #'   \describe{
@@ -83,25 +83,49 @@ plotly_tlfd <- function(model, target = NULL, names = c("model", "target"),
 #' @param pct \code{TRUE/FALSE} If true, a percentage distribution will be
 #'   returned. If false, the raw counts will be returned.
 #'
-#' @return A dataframe with a \code{bin} column of impedance and a \code{count}
-#'   column of observations.
+#' @return A named list with three components
+#'   \describe{
+#'     \item{tbl}{A dataframe with a \code{bin} column of impedance and a \code{count}
+#'     column of observations, which can be fed to \code{plot(ly)_tlfd}}
+#'     \item{avg}{The average trip length}
+#'     \item{iz}{The intrazonal percentage}
+#'   }
 #'
 #' @export
 #'
 prep_tlfd_data <- function(skim, model, max_dist = 60, pct = TRUE) {
 
-  # Join skim to model trip table and process
-  final <- model %>%
-    dplyr::left_join(skim, by = c("from" = "from", "to" = "to")) %>%
+  # Join skim to model trip
+  tbl <- model %>%
+    dplyr::left_join(skim, by = c("from" = "from", "to" = "to"))
+
+  # Calculate some summary stats
+  avg <- round(stats::weighted.mean(tbl$imp, w = tbl$trips, na.rm = TRUE), 2)
+
+  iz <- tbl %>%
+    dplyr::mutate(iz = ifelse(from == to, 1, 0)) %>%
+    dplyr::group_by(iz) %>%
+    dplyr::summarize(trips = sum(trips)) %>%
+    dplyr::mutate(pct = trips / sum(trips)) %>%
+    dplyr::filter(iz == 1) %>%
+    .$pct
+  iz <- round(iz * 100, 2)
+
+  # bin the table to prepare it for plot(ly)_tlfd
+  tbl <- tbl %>%
     dplyr::mutate(bin = pmin(floor(imp), max_dist)) %>%
     dplyr::group_by(bin) %>%
     dplyr::summarize(count = sum(trips)) %>%
     ungroup()
 
   if (pct) {
-    final <- final %>%
-      mutate(count = round(count / sum(count) * 100, 2))
+    tbl <- tbl %>%
+      dplyr::mutate(count = round(count / sum(count) * 100, 2))
   }
 
+  final <- list()
+  final$tbl <- tbl
+  final$avg <- avg
+  final$iz <- iz
   return(final)
 }

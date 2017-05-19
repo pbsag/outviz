@@ -16,7 +16,9 @@ test_that("check prepare_tlfd_data", {
   model$trips <- c(1:9)
   result <- prep_tlfd_data(skim, model, pct = FALSE)
 
-  expect_equal(result$count, c(3, 7, 11, 15, 9))
+  expect_equal(result$tbl$count, c(3, 7, 11, 15, 9))
+  expect_equal(result$avg, 3.67)
+  expect_equal(result$iz, 33.33)
 })
 
 test_that("check plotly_tlfd", {

@@ -4,7 +4,7 @@
 \alias{prep_tlfd_data}
 \title{Prepares model data for tlfd plotting. Given a skim table and model trip
 table, will return a table in the format needed by \code{plotly_tlfd} and
-\code{plot_tlfd}.}
+\code{plot_tlfd}. Also calculates average impedance and intrazonal percent.}
 \usage{
 prep_tlfd_data(skim, model, max_dist = 60, pct = TRUE)
 }
@@ -30,11 +30,16 @@ prep_tlfd_data(skim, model, max_dist = 60, pct = TRUE)
 returned. If false, the raw counts will be returned.}
 }
 \value{
-A dataframe with a \code{bin} column of impedance and a \code{count}
-  column of observations.
+A named list with three components
+  \describe{
+    \item{tbl}{A dataframe with a \code{bin} column of impedance and a \code{count}
+    column of observations, which can be fed to \code{plot(ly)_tlfd}}
+    \item{avg}{The average trip length}
+    \item{iz}{The intrazonal percentage}
+  }
 }
 \description{
 Prepares model data for tlfd plotting. Given a skim table and model trip
 table, will return a table in the format needed by \code{plotly_tlfd} and
-\code{plot_tlfd}.
+\code{plot_tlfd}. Also calculates average impedance and intrazonal percent.
 }
