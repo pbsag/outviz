@@ -4,14 +4,27 @@
 \alias{plotly_tlfd}
 \title{Plot a trip length frequency distribution comparison as an interactive figure}
 \usage{
-plotly_tlfd(model, target)
+plotly_tlfd(model, target = NULL, names = c("model", "target"),
+  xaxis = "bin", yaxis = "count")
 }
 \arguments{
-\item{model}{A dataframe with a distance field and a frequency field representing
-the model or current scenario.}
+\item{model}{A dataframe with the following fields
+\describe{
+  \item{bin}{A column listing the bin values}
+  \item{count}{A column listing the count per bin}
+}}
 
-\item{target}{A dataframe with a distance field and a frequency field representing
-the target or reference scenario.}
+\item{target}{A dataframe with the following fields
+\describe{
+  \item{bin}{A column listing the bin values}
+  \item{count}{A column listing the count per bin}
+}}
+
+\item{names}{Character vector of names for traces}
+
+\item{xaxis}{Name to plot on x axis}
+
+\item{yaxis}{Name to plot on y axis}
 }
 \value{
 A plotly object
@@ -19,4 +32,3 @@ A plotly object
 \description{
 Plot a trip length frequency distribution comparison as an interactive figure
 }
-

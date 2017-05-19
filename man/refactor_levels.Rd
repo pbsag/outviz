@@ -20,4 +20,3 @@ Refactor a variable so that it prints properly.
 \details{
 If the variable is already a named factor, then this simply returns
 }
-

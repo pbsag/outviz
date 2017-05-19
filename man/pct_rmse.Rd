@@ -17,4 +17,3 @@ The percent root mean squared error between \code{x} and \code{y}
 \description{
 Calculate percent RMSE
 }
-

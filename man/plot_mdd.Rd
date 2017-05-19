@@ -34,4 +34,3 @@ plot_mdd(links, "volume", "count")
 plot_mdd(links, "volume", "count", color_field = "facility_group")
 
 }
-
