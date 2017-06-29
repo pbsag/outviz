@@ -105,11 +105,11 @@ plotly_validation <- function(links, volume, count, color_field = NULL,
   slope = round(coefficients(model)[2], 3)
   intercept = round(coefficients(model)[1], 2)
   if (intercept > 0) {
-    sign = "-"
-  } else {
     sign = "+"
+  } else {
+    sign = "-"
   }
-  equation <- paste0("y = ", slope, "x ", sign, " ", intercept)
+  equation <- paste0("y = ", slope, "x ", sign, " ", abs(intercept))
 
   # Create initial plot with a simple y = x line
   p <- plotly::plot_ly() %>%
@@ -144,7 +144,7 @@ plotly_validation <- function(links, volume, count, color_field = NULL,
         alpha = 0.5, showlegend = FALSE, color = I("blue")
       ) %>%
       plotly::add_text(
-        x = 10000, y = max(links[[volume]]), text = equation,
+        x = max(links[[count]]) * .33, y = max(links[[volume]]), text = equation,
         showlegend = FALSE
       )
   }
