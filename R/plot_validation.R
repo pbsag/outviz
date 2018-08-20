@@ -56,10 +56,12 @@ plot_validation <- function(links, volume, count, color_field = NULL,
 
   if(show_lm){
     p +
+      # stat_smooth_func(
       stat_smooth_func(
         geom = "text", method = "lm",
         hjust = 0,
-        parse = TRUE) +
+        parse = TRUE,
+        size = 3) +
       geom_smooth(method = "lm", se = ifelse(is.null(color_field), TRUE, FALSE))
   } else {
     p
