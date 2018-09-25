@@ -118,12 +118,10 @@ StatSmoothFunc <- ggproto(
     m.rmse <- (sqrt( sum(m$residuals^2) / (length(m$residuals) - 1)) /
       mean(m$fitted.values)) * 100
 
-    eq <- substitute(atop(italic(y) == b %.% italic(x) + a, PRMSE~"="~rmse),
+    eq <- substitute(atop(italic(y) == b %.% italic(x) + a),
                      list(
-                       # a = format(coef(m)[1], digits = 3),
                        a = as.numeric(format(coef(m)[1], digits = 3)),
-                       b = as.numeric(format(coef(m)[2], digits = 3)),
-                       rmse = format(m.rmse, digits = 3)
+                       b = as.numeric(format(coef(m)[2], digits = 3))
                      ))
     func_string = as.character(as.expression(eq))
 
