@@ -24,4 +24,3 @@ cuts[1:10]
 table(cuts)
 
 }
-

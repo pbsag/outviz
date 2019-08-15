@@ -4,18 +4,6 @@
 #' @name outviz
 NULL
 
-#' Maximum desirable deviation curve
-#'
-#' A dataset containing the maximum desirable error for links by volume.
-#'
-#' @format A data frame with 7 rows and 2 variables:
-#' \describe{
-#'   \item{volume}{the volume category of the road}
-#'   \item{mdd}{maximum desirable deviation, in percent}
-#' }
-#'
-"mdd"
-
 #' Link output table
 #'
 #' A dataset containing example link volume and count information to demonstrate
@@ -23,7 +11,8 @@ NULL
 #'
 #' @format A data frame with 505 observations and 8 variables.
 #' \describe{
-#'   \item{a, b}{Node identifiers}
+#'   \item{a}{Node identifier}
+#'   \item{b}{Node identifier}
 #'   \item{facility_type}{The facility type of the links}
 #'   \item{facility_group}{High-level facility types}
 #'   \item{area_type}{The area type of the links}
@@ -39,3 +28,16 @@ NULL
 #' }
 #'
 "links"
+
+#' District-to-District Flows
+#'
+#' A dataset containing district-to-district flows.
+#'
+#' @format A data frame with 20 observations and 3 variables.
+#' \describe{
+#'   \item{origin}{Origin zone}
+#'   \item{destination}{Destination zone}
+#'   \item{flow}{Flow from origin to destination}
+#' }
+#'
+"flows"

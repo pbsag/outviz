@@ -49,8 +49,8 @@ link_targets <- function(links, volume, count,
 
     # links w/in 20%
     test_frame[["expressways"]] <- bind_rows(
-      link_test(f, quote(error <= 20), "Expressway links under 20% error", 75),
-      link_test(f, quote(error <= 10), "Expressway links under 10% error", 50)
+      link_test(f, quote(error <= 20), "Freeway links under 20% error", 75),
+      link_test(f, quote(error <= 10), "Freeway links under 10% error", 50)
     )
 
   }

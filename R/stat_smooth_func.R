@@ -113,13 +113,16 @@ StatSmoothFunc <- ggproto(
     if (is.character(method)) method <- match.fun(method)
 
     base.args <- list(quote(formula), data = quote(data), weights = quote(weight))
-    model <- do.call(method, c(base.args, method.args))
+    m <- do.call(method, c(base.args, method.args))
 
-    m = model
-    eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2,
-                     list(a = format(coef(m)[1], digits = 3),
-                          b = format(coef(m)[2], digits = 3),
-                          r2 = format(summary(m)$r.squared, digits = 3)))
+    m.rmse <- (sqrt( sum(m$residuals^2) / (length(m$residuals) - 1)) /
+      mean(m$fitted.values)) * 100
+
+    eq <- substitute(atop(italic(y) == b %.% italic(x) + a),
+                     list(
+                       a = as.numeric(format(coef(m)[1], digits = 3)),
+                       b = as.numeric(format(coef(m)[2], digits = 3))
+                     ))
     func_string = as.character(as.expression(eq))
 
     if(is.null(xpos)) xpos = min(data$x)*0.9

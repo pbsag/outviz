@@ -18,6 +18,7 @@ a numeric vector of \code{length(x)} containing the percent deviation
 \description{
 Calculate percent error
 }
+
 \details{
 Given in percentage points (already multiplied by 100),
   \eqn{ ((x - y) / y) * 100}
@@ -26,4 +27,3 @@ Given in percentage points (already multiplied by 100),
 pct_error(435, 422)
 
 }
-
