@@ -3,7 +3,7 @@
 
 `outviz` is a R package that [Greg Macfarlane](mailto:gregmacfarlane@byu.edu) and [Kyle Ward](mailto:kyle@caliper.com) built for building summary tables and output visualizations for transport planning models. The only documentation at this point are the man pages built from [roxygen2 headers](https://kbroman.org/pkg_primer/pages/docs.html) in the code. There are no vignettes or wiki content yet, although both will become works in progress if this packages works out in current use.
 
-In addition to needing a better package name `outviz` requires `plotly` to be installed from CRAN before attempting to build the package locally. It also uses the `chorddiag` package, which is an interface to the D3 library for generating them. [chorddiag](https://github.com/mattflor/chorddiag) is not in CRAN, so you must install the package separately:
+In addition to needing a better package name `outviz` requires `plotly` and `chorddiag` to be installed. Both packages should be installed as part of building the package locally. If the installation stalls, as it did for me, you can run `install.packages("plotly")` to install it from CRAN. `chorddiag` is an [interface to the D3 library for generating chord diagrams](https://github.com/mattflor/chorddiag), and must be installed from its GitHub repository:
 ```r
 install.packages("devtools")  # If not already installed
 devtools::install_github("mattflor/chorddiag")
