@@ -1,7 +1,7 @@
 # outviz
 [![Build Status](https://travis-ci.org/pbsag/outviz.svg?branch=master)](https://travis-ci.org/pbsag/outviz)
 
-`outviz` is a R package that [Greg Macfarlane](mailto:gregmacfarlane@byu.edu) and [Kyle Ward](mailto:kyle@caliper.com) built for building summary tables and output visualizations for transport planning models. The only documentation at this point are the man pages built from [roxygen2 headers](https://kbroman.org/pkg_primer/pages/docs.html) in the code. There are no vignettes or wiki content yet, although both will become works in progress if this packages works out in current use.
+`outviz` is a R package that [Greg Macfarlane](mailto:gregmacfarlane@byu.edu) and [Kyle Ward](mailto:kyle@caliper.com) built for building summary tables and output visualizations for transport planning models. The only documentation at this point are the man pages built from [roxygen2 headers](https://kbroman.org/pkg_primer/pages/docs.html) in the code. There are no vignettes or wiki content yet, although the former is a work in progress that will hopefully appear in this repo before 2020.
 
 In addition to needing a better package name `outviz` requires `plotly` and `chorddiag` to be installed. Both packages should be installed as part of building the package locally. If the installation stalls, as it did for me, you can run `install.packages("plotly")` to install it from CRAN. `chorddiag` is an [interface to the D3 library for generating chord diagrams](https://github.com/mattflor/chorddiag), and must be installed from its GitHub repository:
 ```r
@@ -45,4 +45,10 @@ A quick look at the contents of `R/data.R` reveals that the following link field
 + `ffspeed` is the free-flow speed on the link, in miles/hour
 + `speed` is the simulated speed from the network assignment, in miles/hour
 
-It appears that other fields can be coded as well and will be ignored by `outviz`.
+It appears that other fields can be coded as well and will be ignored by `outviz`. If you want to plot chord diagrams the following fields in a tibble are required:
+
++ `origin` zone, district, or region
++ `dest`ination zone district, or region
++ `flow` between `origin` and `dest`intation to include in the chord diagram
+
+As with the link records, it appears that additional fields in this tibble will be ignored by `outviz`.
