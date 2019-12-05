@@ -17,3 +17,13 @@ The root mean squared error between \code{x} and \code{y}
 \description{
 Calculate RMSE
 }
+
+\details{
+\eqn{\sqrt{\sum(x - y)^2/(n - 1)}}
+}
+\examples{
+x <- runif(10)
+y <- x + rnorm(10)
+rmse(x, y)
+
+}
